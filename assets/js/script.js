@@ -18,12 +18,12 @@ const storeCityNames = (cityName) => {
 
 const renderCities = (citiesFromLocalStorage) => {
   $(citiesFromLocalStorage).each(constructListItem);
-  // construct list item for each city name and append to #searchHistoryDiv
-  console.log("i'm here");
 };
 
 const constructListItem = (index, cityName) => {
-  const listItem = `<li class="list-group-item">${cityName}</li>`;
+  const listItem = `<li class="list-group-item">${
+    cityName.charAt(0).toUpperCase() + cityName.substr(1).toLowerCase()
+  }</li>`;
   $("#searchHistoryDiv").append(listItem);
   return listItem;
 };
