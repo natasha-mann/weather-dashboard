@@ -1,6 +1,6 @@
 // function for when the submit button is clicked
 const onSubmit = (event) => {
-  event.preventDefault();
+  // event.preventDefault();
   const cityName = $("#cityInput").val();
   storeCityNames(cityName);
   // then get all weather data for cityName
@@ -83,7 +83,6 @@ const fetchWeatherData = (cityName) => {
     };
 
     const functionForApplication = (oneApiData) => {
-      console.log(oneApiData);
       const currentDayData = getCurrentDayWeather(oneApiData);
       const forecastDataArray = getForecastData(oneApiData);
 
@@ -117,8 +116,9 @@ const onLoad = () => {
   if (citiesFromLocalStorage) {
     renderCities(citiesFromLocalStorage);
   }
-  // get the last city name from citiesFromLocalStorage and store in variable called cityName
-  // fetchWeatherData(cityName);
+  const cityName = citiesFromLocalStorage[citiesFromLocalStorage.length - 1];
+  console.log(cityName);
+  fetchWeatherData(cityName);
 };
 
 $("#cityForm").submit(onSubmit);
