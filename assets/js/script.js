@@ -40,25 +40,32 @@ const getFromLocalStorage = () => {
 
 const getCurrentDayWeather = (oneApiData) => {
   return {
-    date: dataFromServer.current.dt,
-    iconURL: `http://openweathermap.org/img/wn/${dataFromServer.current.weather[0].icon}@2x.png`,
-    temperature: dataFromServer.current.temp,
-    humidity: dataFromServer.current.humidity,
-    windSpeed: dataFromServer.current.wind_speed,
-    uvIndex: dataFromServer.current.uvi,
+    date: oneApiData.current.dt,
+    iconURL: `http://openweathermap.org/img/wn/${oneApiData.current.weather[0].icon}@2x.png`,
+    temperature: oneApiData.current.temp,
+    humidity: oneApiData.current.humidity,
+    windSpeed: oneApiData.current.wind_speed,
+    uvIndex: oneApiData.current.uvi,
   };
 };
 
 const getForecastData = (oneApiData) => {
   // iterate and construct the return data array
-  return [
+  const forecastData = oneApiData.daily.forEach(constructForecastObject);
+  return forecastData;
+};
+
+const constructForecastObject = (item) => {
+  const forecastObject = [
     {
-      date: "",
-      iconURL: "",
-      temperature: "",
-      humidity: "",
+      date: item.dt,
+      iconURL: `http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`,
+      temperature: item.temp.day,
+      humidity: item.humidity,
     },
   ];
+
+  return forecastObject;
 };
 
 const fetchWeatherData = (cityName) => {
@@ -79,8 +86,8 @@ const fetchWeatherData = (cityName) => {
     const functionForApplication = (oneApiData) => {
       console.log(oneApiData);
       const currentDayData = getCurrentDayWeather(oneApiData);
-      console.log(currentDayData);
-      const forecastData = getForecastData();
+      const forecastData = getForecastData(oneApiData);
+      console.log(forecastData);
       // renderCurrentCardComponent(currentData);
       // renderForecastCardComponent(forecastData);
     };
