@@ -1,0 +1,24 @@
+body {
+  height: 100vh;
+}
+
+header {
+  background-color: #ffddd2;
+  height: 15vh;
+}
+
+.navbar-brand {
+  margin-right: 0px;
+}
+
+.main-row {
+  height: 85vh;
+}
+
+#sidebar-col {
+  background-color: #edf6f9;
+}
+
+#forecast-col {
+  background-color: #e29578;
+}
