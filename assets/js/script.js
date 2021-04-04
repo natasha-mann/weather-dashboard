@@ -67,6 +67,14 @@ const constructForecastObject = (item) => {
   return forecastObject;
 };
 
+const renderCurrentCardComponent = (currentData) => {
+  // from current data build the current card component
+};
+
+const renderForecastCardComponent = (forecastData) => {
+  // from current data build the current card component
+};
+
 const fetchWeatherData = (cityName) => {
   const weatherApiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=785940357963f0488e126bd41a8d1e5c`;
 

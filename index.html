@@ -42,8 +42,17 @@
           <ul class="list-group list-group-flush" id="searchHistoryDiv"></ul>
         </div>
         <div class="h-100 col-9" id="forecast-col">
-          <div id="current-weather"></div>
-          <div id="5-day-weather"></div>
+          <div class="row h-50 current-weather" id="current-weather">
+            <h2 class="mt-4" id="cityName">
+              cityName <span id="currentDate">currentDate </span
+              ><span id="weatherIcon">weatherIcon</span>
+            </h2>
+            <div id="temp">Temperature:</div>
+            <div id="humidity">Humidity:</div>
+            <div id="windSpeed">Wind Speed:</div>
+            <div id="uv">UV Index:</div>
+          </div>
+          <div class="row h-50 future-weather" id="future-weather"></div>
         </div>
       </div>
     </main>

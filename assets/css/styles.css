@@ -1,9 +1,17 @@
+:root {
+  --dark-teal: #006d77;
+  --blue-green: #83c5be;
+  --alice-blue: #edf6f9;
+  --light-salmon: #ffddd2;
+  --dark-salmon: #e29578;
+}
+
 body {
   height: 100vh;
 }
 
 header {
-  background-color: #ffddd2;
+  background-color: var(--light-salmon);
   height: 15vh;
 }
 
@@ -16,9 +24,13 @@ header {
 }
 
 #sidebar-col {
-  background-color: #edf6f9;
+  background-color: var(--alice-blue);
 }
 
-#forecast-col {
-  background-color: #e29578;
+.current-weather {
+  background-color: var(--alice-blue);
+}
+
+.future-weather {
+  background-color: var(--light-salmon);
 }
