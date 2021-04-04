@@ -2,6 +2,7 @@
 const onSubmit = (event) => {
   event.preventDefault();
   storeCityNames($("#cityInput").val());
+  // find a way to update search history list on submit
   // then get all weather data for cityName
 };
 
@@ -16,8 +17,15 @@ const storeCityNames = (cityName) => {
 };
 
 const renderCities = (citiesFromLocalStorage) => {
+  $(citiesFromLocalStorage).each(constructListItem);
   // construct list item for each city name and append to #searchHistoryDiv
   console.log("i'm here");
+};
+
+const constructListItem = (index, cityName) => {
+  const listItem = `<li class="list-group-item">${cityName}</li>`;
+  $("#searchHistoryDiv").append(listItem);
+  return listItem;
 };
 
 const getFromLocalStorage = () => {
@@ -31,9 +39,11 @@ const getFromLocalStorage = () => {
 
 // function called on load of the document
 const onLoad = () => {
-  // read from local storage and store data in variable called citiesFromLocalStorage
-  // if data is present call renderCities and pass the data from local storage
-  // renderCities(citiesFromLocalStorage)
+  const citiesFromLocalStorage = getFromLocalStorage();
+  if (citiesFromLocalStorage) {
+    renderCities(citiesFromLocalStorage);
+  }
+
   // get the last city name from citiesFromLocalStorage and store in variable called cityName
   // fetchAllWeatherData(cityName)
 };
