@@ -51,7 +51,7 @@ const getCurrentDayWeather = (oneApiData) => {
 
 const getForecastData = (oneApiData) => {
   // iterate and construct the return data array
-  const forecastData = oneApiData.daily.forEach(constructForecastObject);
+  const forecastData = oneApiData.daily.map(constructForecastObject);
   return forecastData;
 };
 
@@ -64,7 +64,6 @@ const constructForecastObject = (item) => {
       humidity: item.humidity,
     },
   ];
-
   return forecastObject;
 };
 
@@ -86,8 +85,8 @@ const fetchWeatherData = (cityName) => {
     const functionForApplication = (oneApiData) => {
       console.log(oneApiData);
       const currentDayData = getCurrentDayWeather(oneApiData);
-      const forecastData = getForecastData(oneApiData);
-      console.log(forecastData);
+      const forecastDataArray = getForecastData(oneApiData);
+
       // renderCurrentCardComponent(currentData);
       // renderForecastCardComponent(forecastData);
     };
