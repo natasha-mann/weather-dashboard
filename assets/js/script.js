@@ -1,9 +1,10 @@
 // function for when the submit button is clicked
 const onSubmit = (event) => {
   event.preventDefault();
-  storeCityNames($("#cityInput").val());
-  // find a way to update search history list on submit
+  const cityName = $("#cityInput").val();
+  storeCityNames(cityName);
   // then get all weather data for cityName
+  fetchWeatherData(cityName);
 };
 
 const storeCityNames = (cityName) => {
@@ -37,13 +38,29 @@ const getFromLocalStorage = () => {
   }
 };
 
+const fetchWeatherData = (cityName) => {
+  const weatherApiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=785940357963f0488e126bd41a8d1e5c`;
+
+  const functionForJSON = (responseObject) => {
+    return responseObject.json();
+  };
+
+  const functionForApplication = (dataFromServer) => {
+    console.log(dataFromServer);
+    const cityLonLat = dataFromServer.coord;
+    const oneApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${cityLonLat.lat}&lon=${cityLonLat.lon}&appid=785940357963f0488e126bd41a8d1e5c`;
+  };
+
+  fetch(weatherApiUrl).then(functionForJSON).then(functionForApplication);
+  // .catch(functionToHandleError);
+};
+
 // function called on load of the document
 const onLoad = () => {
   const citiesFromLocalStorage = getFromLocalStorage();
   if (citiesFromLocalStorage) {
     renderCities(citiesFromLocalStorage);
   }
-
   // get the last city name from citiesFromLocalStorage and store in variable called cityName
   // fetchAllWeatherData(cityName)
 };
