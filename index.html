@@ -24,23 +24,21 @@
     <main class="container-fluid">
       <div class="row main-row">
         <div class="h-100 col-3" id="sidebar-col">
-          <div class="input-group mb-3 mt-3">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Search for a city"
-              aria-label="Search for a city"
-              aria-describedby="button-addon2"
-              id="city-input"
-            />
-            <button
-              class="btn btn-outline-secondary"
-              type="button"
-              id="button-addon2"
-            >
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
+          <form id="city-form">
+            <div class="input-group mb-3 mt-3">
+              <input
+                type="city-input"
+                class="form-control"
+                id="city-input"
+                aria-describedby="city-input"
+                placeholder="Search for a city"
+              />
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </form>
+
           <div id="search-history-div"></div>
         </div>
         <div class="h-100 col-9" id="forecast-col">
