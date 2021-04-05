@@ -1,6 +1,6 @@
 // function for when the submit button is clicked
 const onSubmit = (event) => {
-  event.preventDefault();
+  // event.preventDefault();
   const cityName = $("#cityInput").val().toLowerCase();
   storeCityNames(cityName);
   $("#current-weather").empty();
@@ -191,76 +191,20 @@ const fetchWeatherData = (cityName) => {
     .catch(functionToHandleError);
 };
 
-const renderWeatherContainer = () => {
-  const weatherContainer = `<div class="row main-row">
-  <div class="h-100 col-3" id="sidebar-col">
-    <form id="cityForm">
-      <div class="input-group mb-3 mt-3">
-        <input
-          type="city-input"
-          class="form-control"
-          id="cityInput"
-          aria-describedby="city-input"
-          placeholder="Search for a city"
-        />
-        <button type="submit" class="btn btn-primary">
-          <i class="fas fa-search"></i>
-        </button>
-      </div>
-    </form>
-
-    <ul class="list-group list-group-flush" id="searchHistoryDiv"></ul>
-  </div>
-  <div class="h-100 col-9" id="forecast-col">
-    <div class="row h-50 px-3 current-weather-card">
-      <div class="current-card" id="current-weather"></div>
-    </div>
-
-    <div class="row h-50 pt-4 future-weather" id="future-weather">
-      <h2 class="row px-3 m-0 fw-bold forecast-heading">
-        5 Day Forecast:
-      </h2>
-      <div class="row row-cols-5" id="forecastCardDiv"></div>
-    </div>
-  </div>
-</div>`;
-  $("#main").append(weatherContainer);
-  return weatherContainer;
-};
-
 // function called on load of the document
-// const onLoad = () => {
-//   const citiesFromLocalStorage = getFromLocalStorage();
-//   if (citiesFromLocalStorage) {
-//     renderCities(citiesFromLocalStorage);
-//   }
-//   const cityName = citiesFromLocalStorage[0];
-//   if (cityName) {
-//     fetchWeatherData(cityName);
-//   } else {
-//     $("#main").empty();
-//     renderStartContainer();
-//   }
-// };
-
-const onFirstSubmit = (event) => {
-  event.preventDefault();
-  const cityName = $("#startInput").val().toLowerCase();
-  storeCityNames(cityName);
-  $("#main").empty();
-  fetchWeatherData(cityName);
-  renderWeatherContainer();
-  // const citiesFromLocalStorage = getFromLocalStorage();
-  // if (citiesFromLocalStorage) {
-  //   renderCities(citiesFromLocalStorage);
-  // }
-  // const cityName = citiesFromLocalStorage[0];
-  // if (cityName) {
-  //   fetchWeatherData(cityName);
-  // }
+const onLoad = () => {
+  const citiesFromLocalStorage = getFromLocalStorage();
+  if (citiesFromLocalStorage) {
+    renderCities(citiesFromLocalStorage);
+  }
+  const cityName = citiesFromLocalStorage[0];
+  if (cityName) {
+    fetchWeatherData(cityName);
+  } else {
+    $("#main").empty();
+    renderStartContainer();
+  }
 };
-
-$("#startForm").submit(onFirstSubmit);
 
 $("#searchHistoryDiv").click(onClick);
 $("#cityForm").submit(onSubmit);
