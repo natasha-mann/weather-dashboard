@@ -95,7 +95,7 @@ const constructForecastObject = (item) => {
 };
 
 const renderCurrentCardComponent = (currentDayData, cityName) => {
-  const currentCardComponent = `<h2 class="mt-4 current-city" id="cityName">${
+  const currentCardComponent = `<h2 class="mt-2 current-city" id="cityName">${
     cityName.charAt(0).toUpperCase() + cityName.substr(1).toLowerCase()
   } <span id="currentDate">- ${currentDayData.date}</span
   ><span id="weatherIcon"><img src="${currentDayData.iconURL}"/> </span>
