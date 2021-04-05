@@ -21,7 +21,7 @@
     <header class="navbar-brand">
       <div class="display-1 text-center">Weather Dashboard</div>
     </header>
-    <main class="container-fluid position-relative start-div">
+    <main id="main" class="container-fluid">
       <div
         class="start-form-div position-absolute top-50 start-50 translate-middle h-50 w-50"
       >
@@ -33,17 +33,16 @@
           <br />
           <div>Get started by searching below!</div>
         </div>
-
         <form
           id="startForm"
           class="start-form position-absolute start-50 translate-middle"
         >
           <div class="input-group mb-3 mt-3">
             <input
-              type="city-input"
+              type="start-input"
               class="form-control"
-              id="cityInput"
-              aria-describedby="city-input"
+              id="startInput"
+              aria-describedby="start-input"
               placeholder="Search for a city"
             />
             <button type="submit" class="btn btn-primary">
