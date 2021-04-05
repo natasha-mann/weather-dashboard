@@ -1,7 +1,6 @@
 // function for when the submit button is clicked
 const onSubmit = (event) => {
-  event.preventDefault();
-  const cityName = $("#cityInput").val();
+  const cityName = $("#cityInput").val().toLowerCase();
   storeCityNames(cityName);
   $("#current-weather").empty();
   $("#forecastCardDiv").empty();
@@ -11,7 +10,6 @@ const onSubmit = (event) => {
 const storeCityNames = (cityName) => {
   if (cityName !== "") {
     const cityNamesArray = getFromLocalStorage();
-    console.log(cityNamesArray);
     if (!cityNamesArray.includes(cityName)) {
       cityNamesArray.push(cityName);
       localStorage.setItem("cityNames", JSON.stringify(cityNamesArray));
