@@ -202,9 +202,19 @@ const onLoad = () => {
   if (cityName) {
     fetchWeatherData(cityName);
   } else {
-    window.location.replace("/start.html");
+    // window.location.replace("/start.html");
   }
 };
+
+const onFirstSubmit = (event) => {
+  console.log("hello");
+  const cityName = $("#cityInput").val().toLowerCase();
+  window.location.replace("/index.html");
+  storeCityNames(cityName);
+  fetchWeatherData(cityName);
+};
+
+$("#startForm").submit(onFirstSubmit);
 
 $("#searchHistoryDiv").click(onClick);
 $("#cityForm").submit(onSubmit);
