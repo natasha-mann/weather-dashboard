@@ -37,9 +37,18 @@ const getFromLocalStorage = () => {
   }
 };
 
+// function for clicking on search history
+const onClick = (event) => {
+  const cityName = event.target.textContent;
+  $("#current-weather").empty();
+  $("#forecastCardDiv").empty();
+  fetchWeatherData(cityName);
+};
+
 // function to convert temp from kelvin to celcius
-const convertTemperature = (kelvin) =>
-  (tempInCelcius = Math.floor(kelvin - 273.15));
+const convertTemperature = (kelvin) => {
+  return (tempInCelcius = Math.floor(kelvin - 273.15));
+};
 
 // function to convert unix date string to a dd/mm/yy format
 const convertDateTime = (dateString) => {
@@ -189,5 +198,6 @@ const onLoad = () => {
   fetchWeatherData(cityName);
 };
 
+$("#searchHistoryDiv").click(onClick);
 $("#cityForm").submit(onSubmit);
 $(document).ready(onLoad);
