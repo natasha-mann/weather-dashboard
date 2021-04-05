@@ -1,11 +1,14 @@
 // function for when the search button is clicked
 const onSearch = (event) => {
-  // event.preventDefault();
+  event.preventDefault();
   const cityName = $("#cityInput").val().toLowerCase();
   storeCityNames(cityName);
-  $(".start-div").empty();
+  $(".start-div").remove();
   $("#current-weather").empty();
   $("#forecastCardDiv").empty();
+  $("#searchHistoryDiv").empty();
+  const citiesFromLocalStorage = getFromLocalStorage();
+  renderCities(citiesFromLocalStorage);
   fetchWeatherData(cityName);
 };
 
