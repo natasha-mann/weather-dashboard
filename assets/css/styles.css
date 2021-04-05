@@ -75,3 +75,20 @@ header {
 .history-list {
   cursor: pointer;
 }
+
+.start-div {
+  height: 85vh;
+  background-color: var(--alice-blue);
+}
+
+.start-form-div {
+  background-color: var(--dark-teal);
+}
+
+.start-form {
+  top: 80%;
+}
+
+.start-info {
+  color: white;
+}

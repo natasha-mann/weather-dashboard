@@ -201,6 +201,8 @@ const onLoad = () => {
   const cityName = citiesFromLocalStorage[0];
   if (cityName) {
     fetchWeatherData(cityName);
+  } else {
+    window.location.replace("/start.html");
   }
 };
 
