@@ -152,16 +152,22 @@ const constructForecastCardsAndAppend = (item, index) => {
 const fetchWeatherData = (cityName) => {
   const weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=785940357963f0488e126bd41a8d1e5c`;
 
-  const functionForJSON = (currentDayData) => {
-    return currentDayData.json();
+  const functionForJSON = (responseObject) => {
+    if (responseObject.status !== 200) {
+      throw new Error("Internal Server Error");
+    }
+    return responseObject.json();
   };
 
   const functionForApplication = (currentDayData) => {
     const cityLonLat = currentDayData.coord;
     const oneApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${cityLonLat.lat}&lon=${cityLonLat.lon}&appid=785940357963f0488e126bd41a8d1e5c`;
 
-    const functionForJSON = (oneApiData) => {
-      return oneApiData.json();
+    const functionForJSON = (responseObject) => {
+      if (responseObject.status !== 200) {
+        throw new Error("Internal Server Error");
+      }
+      return responseObject.json();
     };
 
     const functionForApplication = (oneApiData) => {
@@ -172,8 +178,14 @@ const fetchWeatherData = (cityName) => {
       renderForecastCardComponent(forecastDataArray);
     };
 
-    const functionToHandleError = (errorObject) => {
-      // handle your error here according to your application
+    const functionToHandleError = () => {
+      $(".start-div").empty();
+      $("#current-weather").empty();
+      $("#forecastCardDiv").empty();
+      $(".start-div").append(`
+    <h2> Oh no! We can't find your city!</h2>
+    <div> Please check your spelling. If you're still having trouble, there may be an issue on our end. Please check back later!</div>
+    `);
     };
 
     fetch(oneApiUrl)
@@ -183,7 +195,13 @@ const fetchWeatherData = (cityName) => {
   };
 
   const functionToHandleError = (errorObject) => {
-    // handle your error here according to your application
+    $(".start-div").empty();
+    $("#current-weather").empty();
+    $("#forecastCardDiv").empty();
+    $(".start-div").append(`
+    <h2> Oh no! We can't find your city!</h2>
+    <div> Please check your spelling. If you're still having trouble, there may be an issue on our end. Please check back later!</div>
+    `);
   };
 
   fetch(weatherApiUrl)
