@@ -37,29 +37,45 @@ const getFromLocalStorage = () => {
   }
 };
 
+// function to convert temp from kelvin to celcius
+const convertTemperature = (kelvin) =>
+  (tempInCelcius = Math.floor(kelvin - 273.15));
+
+// function to convert unix date string to a dd/mm/yy format
+const convertDateTime = (dateString) => {
+  return ([date, month, year] = new Date(dateString * 1000)
+    .toLocaleDateString("en-UK")
+    .split(" / "));
+};
+
+// set object for current weather card
 const getCurrentDayWeather = (oneApiData) => {
+  convertTemperature(oneApiData.current.temp);
+  convertDateTime(oneApiData.current.dt);
   return {
-    date: oneApiData.current.dt,
+    date: [date],
     iconURL: `http://openweathermap.org/img/wn/${oneApiData.current.weather[0].icon}@2x.png`,
-    temperature: oneApiData.current.temp,
+    temperature: tempInCelcius,
     humidity: oneApiData.current.humidity,
     windSpeed: oneApiData.current.wind_speed,
     uvIndex: oneApiData.current.uvi,
   };
 };
 
+// iterate over forecast data array and set object
 const getForecastData = (oneApiData) => {
-  // iterate and construct the return data array
   const forecastData = oneApiData.daily.map(constructForecastObject);
   return forecastData;
 };
 
 const constructForecastObject = (item) => {
+  convertTemperature(item.temp.day);
+  convertDateTime(item.dt);
   const forecastObject = [
     {
-      date: item.dt,
+      date: [date],
       iconURL: `http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`,
-      temperature: item.temp.day,
+      temperature: tempInCelcius,
       humidity: item.humidity,
     },
   ];
@@ -67,17 +83,14 @@ const constructForecastObject = (item) => {
 };
 
 const renderCurrentCardComponent = (currentDayData, cityName) => {
-  const currentDate = currentDayData.date;
-  let [date, month, year] = new Date(currentDate * 1000)
-    .toLocaleDateString("en-UK")
-    .split(" / ");
-  const tempInCelcius = Math.floor(currentDayData.temperature - 273.15);
-  const currentCardComponent = `<h2 class="mt-4 px-3 current-city" id="cityName">${
+  const currentCardComponent = `<h2 class="mt-4 current-city" id="cityName">${
     cityName.charAt(0).toUpperCase() + cityName.substr(1).toLowerCase()
-  } <span id="currentDate">${[date]}</span
+  } <span id="currentDate">- ${currentDayData.date}</span
   ><span id="weatherIcon"><img src="${currentDayData.iconURL}"/> </span>
 </h2>
-<div id="temp" class="current-weather-info">Temperature: ${tempInCelcius} \xB0 C </div>
+<div id="temp" class="current-weather-info">Temperature: ${
+    currentDayData.temperature
+  } \xB0 C </div>
 <div id="humidity" class="current-weather-info">Humidity: ${
     currentDayData.humidity
   }% </div>
@@ -90,7 +103,7 @@ class="current-weather-info" >UV Index: <span id="uv" class="uv class="current-w
   }</span></div>
 </div>`;
   $("#current-weather").append(currentCardComponent);
-  if (currentDayData.uvIndex >= 1 && currentDayData.uvIndex < 3) {
+  if (currentDayData.uvIndex >= 0 && currentDayData.uvIndex < 3) {
     $(".uv").addClass("low-uv");
   } else if (currentDayData.uvIndex >= 3 && currentDayData.uvIndex < 6) {
     $(".uv").removeClass("low-uv").addClass("mid-uv");
@@ -105,22 +118,18 @@ class="current-weather-info" >UV Index: <span id="uv" class="uv class="current-w
 };
 
 const renderForecastCardComponent = (forecastDataArray) => {
+  forecastDataArray.shift();
   forecastDataArray.length = 5;
   forecastDataArray.forEach(constructForecastCardsAndAppend);
 };
 
 const constructForecastCardsAndAppend = (item, index) => {
-  const currentDate = item[0].date;
-  let [date, month, year] = new Date(currentDate * 1000)
-    .toLocaleDateString("en-UK")
-    .split(" / ");
-  const tempInCelcius = Math.floor(item[0].temperature - 273.15);
   const forecastCard = `<div class="col">
 <div class="card future-card p-2 text-center">
-  <h5 class="card-title">${date}</h5>
+  <h5 class="card-title">${item[0].date}</h5>
   <div id="futureWeatherIcon"><img src="${item[0].iconURL}"/></div>
-  <div id="futureTemp">Temp: ${tempInCelcius} \xB0 C</div>
-  <div id="futureHumidity">Humidity: ${item[0].humidity}</div>
+  <div id="futureTemp">Temp: ${item[0].temperature} \xB0 C</div>
+  <div id="futureHumidity">Humidity: ${item[0].humidity}%</div>
 </div>
 </div>`;
   $("#forecastCardDiv").append(forecastCard);
