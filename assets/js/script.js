@@ -3,7 +3,6 @@ const onSubmit = (event) => {
   // event.preventDefault();
   const cityName = $("#cityInput").val();
   storeCityNames(cityName);
-  // then get all weather data for cityName
   fetchWeatherData(cityName);
 };
 
@@ -67,15 +66,23 @@ const constructForecastObject = (item) => {
   return forecastObject;
 };
 
-const renderCurrentCardComponent = (currentData) => {
-  const currentCardComponent = `<h2 class="mt-4" id="cityName">
-  cityName <span id="currentDate">${currentData.date} </span
-  ><span id="weatherIcon"><img src="${currentData.iconURL}"/> </span>
+const renderCurrentCardComponent = (currentDayData, cityName) => {
+  const currentDate = currentDayData.date;
+  // const factoredDate = new Date(currentDate * 1000);
+  // const stringDate = factoredDate.toDateString();
+  let [date, month, year] = new Date(currentDate * 1000)
+    .toLocaleDateString("en-UK")
+    .split(" / ");
+  console.log([date, month, year]);
+  const currentCardComponent = `<h2 class="mt-4" id="cityName">${cityName} <span id="currentDate">${[
+    date,
+  ]}</span
+  ><span id="weatherIcon"><img src="${currentDayData.iconURL}"/> </span>
 </h2>
-<div id="temp">Temperature: ${currentData.temperature} </div>
-<div id="humidity">Humidity: ${currentData.humidity} </div>
-<div id="windSpeed">Wind Speed: ${currentData.windSpeed} </div>
-<div id="uv">UV Index: ${currentData.unIndex} </div>
+<div id="temp">Temperature: ${currentDayData.temperature} </div>
+<div id="humidity">Humidity: ${currentDayData.humidity} </div>
+<div id="windSpeed">Wind Speed: ${currentDayData.windSpeed} </div>
+<div id="uv">UV Index: ${currentDayData.uvIndex} </div>
 </div>`;
 
   $("#current-weather").append(currentCardComponent);
@@ -105,7 +112,7 @@ const fetchWeatherData = (cityName) => {
       const currentDayData = getCurrentDayWeather(oneApiData);
       const forecastDataArray = getForecastData(oneApiData);
 
-      renderCurrentCardComponent(currentDayData);
+      renderCurrentCardComponent(currentDayData, cityName);
       // renderForecastCardComponent(forecastData);
     };
 
