@@ -71,12 +71,13 @@ const renderCurrentCardComponent = (currentDayData, cityName) => {
   let [date, month, year] = new Date(currentDate * 1000)
     .toLocaleDateString("en-UK")
     .split(" / ");
+  const tempInCelcius = Math.floor(currentDayData.temperature - 273.15);
   const currentCardComponent = `<h2 class="mt-4" id="cityName">${cityName} <span id="currentDate">${[
     date,
   ]}</span
   ><span id="weatherIcon"><img src="${currentDayData.iconURL}"/> </span>
 </h2>
-<div id="temp">Temperature: ${currentDayData.temperature} </div>
+<div id="temp">Temperature: ${tempInCelcius} \xB0 C </div>
 <div id="humidity">Humidity: ${currentDayData.humidity} </div>
 <div id="windSpeed">Wind Speed: ${currentDayData.windSpeed} </div>
 <div
