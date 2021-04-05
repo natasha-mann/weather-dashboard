@@ -68,7 +68,18 @@ const constructForecastObject = (item) => {
 };
 
 const renderCurrentCardComponent = (currentData) => {
-  // from current data build the current card component
+  const currentCardComponent = `<h2 class="mt-4" id="cityName">
+  cityName <span id="currentDate">${currentData.date} </span
+  ><span id="weatherIcon"><img src="${currentData.iconURL}"/> </span>
+</h2>
+<div id="temp">Temperature: ${currentData.temperature} </div>
+<div id="humidity">Humidity: ${currentData.humidity} </div>
+<div id="windSpeed">Wind Speed: ${currentData.windSpeed} </div>
+<div id="uv">UV Index: ${currentData.unIndex} </div>
+</div>`;
+
+  $("#current-weather").append(currentCardComponent);
+  return currentCardComponent;
 };
 
 const renderForecastCardComponent = (forecastData) => {
@@ -94,7 +105,7 @@ const fetchWeatherData = (cityName) => {
       const currentDayData = getCurrentDayWeather(oneApiData);
       const forecastDataArray = getForecastData(oneApiData);
 
-      // renderCurrentCardComponent(currentData);
+      renderCurrentCardComponent(currentDayData);
       // renderForecastCardComponent(forecastData);
     };
 
