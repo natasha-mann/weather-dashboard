@@ -66,7 +66,7 @@ const getCurrentDayWeather = (oneApiData) => {
   convertDateTime(oneApiData.current.dt);
   return {
     date: [date],
-    iconURL: `http://openweathermap.org/img/wn/${oneApiData.current.weather[0].icon}@2x.png`,
+    iconURL: `https://openweathermap.org/img/wn/${oneApiData.current.weather[0].icon}@2x.png`,
     temperature: tempInCelcius,
     humidity: oneApiData.current.humidity,
     windSpeed: oneApiData.current.wind_speed,
@@ -86,7 +86,7 @@ const constructForecastObject = (item) => {
   const forecastObject = [
     {
       date: [date],
-      iconURL: `http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`,
+      iconURL: `https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`,
       temperature: tempInCelcius,
       humidity: item.humidity,
     },
