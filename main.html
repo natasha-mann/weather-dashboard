@@ -21,36 +21,38 @@
     <header class="navbar-brand">
       <div class="display-1 text-center">Weather Dashboard</div>
     </header>
-    <main class="container-fluid position-relative start-div">
-      <div
-        class="start-form-div position-absolute top-50 start-50 translate-middle h-50 w-50"
-      >
-        <div class="start-info p-5 fs-4 text-center">
-          <div>
-            Welcome to the weather dashboard. Here you can check the current
-            weather and get a 5 day forecast for the city of your choice.
-          </div>
-          <br />
-          <div>Get started by searching below!</div>
-        </div>
+    <main class="container-fluid">
+      <div class="row main-row">
+        <div class="h-100 col-3" id="sidebar-col">
+          <form id="cityForm">
+            <div class="input-group mb-3 mt-3">
+              <input
+                type="city-input"
+                class="form-control"
+                id="cityInput"
+                aria-describedby="city-input"
+                placeholder="Search for a city"
+              />
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </form>
 
-        <form
-          id="startForm"
-          class="start-form position-absolute start-50 translate-middle"
-        >
-          <div class="input-group mb-3 mt-3">
-            <input
-              type="city-input"
-              class="form-control"
-              id="cityInput"
-              aria-describedby="city-input"
-              placeholder="Search for a city"
-            />
-            <button type="submit" class="btn btn-primary">
-              <i class="fas fa-search"></i>
-            </button>
+          <ul class="list-group list-group-flush" id="searchHistoryDiv"></ul>
+        </div>
+        <div class="h-100 col-9" id="forecast-col">
+          <div class="row h-50 px-3 current-weather-card">
+            <div class="current-card" id="current-weather"></div>
           </div>
-        </form>
+
+          <div class="row h-50 pt-4 future-weather" id="future-weather">
+            <h2 class="row px-3 m-0 fw-bold forecast-heading">
+              5 Day Forecast:
+            </h2>
+            <div class="row row-cols-5" id="forecastCardDiv"></div>
+          </div>
+        </div>
       </div>
     </main>
 

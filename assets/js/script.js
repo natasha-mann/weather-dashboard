@@ -1,5 +1,6 @@
 // function for when the submit button is clicked
 const onSubmit = (event) => {
+  event.preventDefault();
   const cityName = $("#cityInput").val().toLowerCase();
   storeCityNames(cityName);
   $("#current-weather").empty();
@@ -14,8 +15,6 @@ const storeCityNames = (cityName) => {
       cityNamesArray.push(cityName);
       localStorage.setItem("cityNames", JSON.stringify(cityNamesArray));
     }
-  } else {
-    console.log("You must enter a city name");
   }
 };
 
@@ -192,6 +191,16 @@ const fetchWeatherData = (cityName) => {
     .catch(functionToHandleError);
 };
 
+const onFirstSubmit = (event) => {
+  event.preventDefault();
+  const cityName = $("#cityInput").val().toLowerCase();
+  window.location.replace("/main.html");
+  storeCityNames(cityName);
+  fetchWeatherData(cityName);
+};
+
+$("#startForm").submit(onFirstSubmit);
+
 // function called on load of the document
 const onLoad = () => {
   const citiesFromLocalStorage = getFromLocalStorage();
@@ -202,19 +211,9 @@ const onLoad = () => {
   if (cityName) {
     fetchWeatherData(cityName);
   } else {
-    // window.location.replace("/start.html");
+    // window.location.replace("/index.html");
   }
 };
-
-const onFirstSubmit = (event) => {
-  console.log("hello");
-  const cityName = $("#cityInput").val().toLowerCase();
-  window.location.replace("/index.html");
-  storeCityNames(cityName);
-  fetchWeatherData(cityName);
-};
-
-$("#startForm").submit(onFirstSubmit);
 
 $("#searchHistoryDiv").click(onClick);
 $("#cityForm").submit(onSubmit);
