@@ -24,15 +24,15 @@ header {
 }
 
 #sidebar-col {
+  background-color: var(--alice-blue);
+}
+
+.current-weather-card {
   background-color: var(--light-salmon);
 }
 
-.current-weather {
-  background-color: var(--alice-blue);
-}
-
 .future-weather {
-  background-color: var(--alice-blue);
+  background-color: var(--light-salmon);
 }
 
 .uv {
@@ -60,10 +60,6 @@ header {
 .extra-high-uv {
   background-color: purple;
   color: white;
-}
-
-.current-weather-card {
-  background-color: var(--alice-blue);
 }
 
 .current-weather-info {

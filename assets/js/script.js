@@ -72,7 +72,7 @@ const renderCurrentCardComponent = (currentDayData, cityName) => {
     .toLocaleDateString("en-UK")
     .split(" / ");
   const tempInCelcius = Math.floor(currentDayData.temperature - 273.15);
-  const currentCardComponent = `<h2 class="mt-4" id="cityName">${
+  const currentCardComponent = `<h2 class="mt-4 px-3 current-city" id="cityName">${
     cityName.charAt(0).toUpperCase() + cityName.substr(1).toLowerCase()
   } <span id="currentDate">${[date]}</span
   ><span id="weatherIcon"><img src="${currentDayData.iconURL}"/> </span>
