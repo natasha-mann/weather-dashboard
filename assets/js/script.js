@@ -3,6 +3,7 @@ const onSubmit = (event) => {
   // event.preventDefault();
   const cityName = $("#cityInput").val().toLowerCase();
   storeCityNames(cityName);
+  $(".start-div").empty();
   $("#current-weather").empty();
   $("#forecastCardDiv").empty();
   fetchWeatherData(cityName);
@@ -199,10 +200,12 @@ const onLoad = () => {
   }
   const cityName = citiesFromLocalStorage[0];
   if (cityName) {
+    $(".start-div").remove();
+    $("#future-weather-heading")
+      .append(`<h2 class="row px-3 m-0 fw-bold forecast-heading">
+  5 Day Forecast:
+</h2>`);
     fetchWeatherData(cityName);
-  } else {
-    $("#main").empty();
-    renderStartContainer();
   }
 };
 
