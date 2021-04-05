@@ -77,11 +77,17 @@ const renderCurrentCardComponent = (currentDayData, cityName) => {
   } <span id="currentDate">${[date]}</span
   ><span id="weatherIcon"><img src="${currentDayData.iconURL}"/> </span>
 </h2>
-<div id="temp">Temperature: ${tempInCelcius} \xB0 C </div>
-<div id="humidity">Humidity: ${currentDayData.humidity} </div>
-<div id="windSpeed">Wind Speed: ${currentDayData.windSpeed} </div>
+<div id="temp" class="current-weather-info">Temperature: ${tempInCelcius} \xB0 C </div>
+<div id="humidity" class="current-weather-info">Humidity: ${
+    currentDayData.humidity
+  }% </div>
+<div id="windSpeed" class="current-weather-info">Wind Speed: ${
+    currentDayData.windSpeed
+  } mph </div>
 <div
->UV Index: <span id="uv" class="uv"> ${currentDayData.uvIndex}</span></div>
+class="current-weather-info" >UV Index: <span id="uv" class="uv class="current-weather-info> ${
+    currentDayData.uvIndex
+  }</span></div>
 </div>`;
   $("#current-weather").append(currentCardComponent);
   if (currentDayData.uvIndex >= 1 && currentDayData.uvIndex < 3) {
@@ -110,7 +116,7 @@ const constructForecastCardsAndAppend = (item, index) => {
     .split(" / ");
   const tempInCelcius = Math.floor(item[0].temperature - 273.15);
   const forecastCard = `<div class="col">
-<div class="card">
+<div class="card future-card p-2 text-center">
   <h5 class="card-title">${date}</h5>
   <div id="futureWeatherIcon"><img src="${item[0].iconURL}"/></div>
   <div id="futureTemp">Temp: ${tempInCelcius} \xB0 C</div>

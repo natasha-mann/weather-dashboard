@@ -19,7 +19,7 @@
   </head>
   <body>
     <header class="navbar-brand">
-      <div class="display-1 text-center">Weather Dashboard</div>
+      <div class="display-1 fw-bold text-center">Weather Dashboard</div>
     </header>
     <main class="container-fluid">
       <div class="row main-row">
@@ -42,10 +42,12 @@
           <ul class="list-group list-group-flush" id="searchHistoryDiv"></ul>
         </div>
         <div class="h-100 col-9" id="forecast-col">
-          <div class="row h-50 current-weather" id="current-weather"></div>
+          <div class="row h-50 px-3 current-weather-card">
+            <div class="current-card" id="current-weather"></div>
+          </div>
 
           <div class="row h-50 pt-4 future-weather" id="future-weather">
-            <h2 class="row p-0 m-0 fw-bold forecast-heading">
+            <h2 class="row px-3 m-0 fw-bold forecast-heading">
               5 Day Forecast:
             </h2>
             <div class="row row-cols-5" id="forecastCardDiv"></div>
