@@ -149,7 +149,7 @@ const constructForecastCardsAndAppend = (item, index) => {
 };
 
 const fetchWeatherData = (cityName) => {
-  const weatherApiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=785940357963f0488e126bd41a8d1e5c`;
+  const weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=785940357963f0488e126bd41a8d1e5c`;
 
   const functionForJSON = (currentDayData) => {
     return currentDayData.json();
