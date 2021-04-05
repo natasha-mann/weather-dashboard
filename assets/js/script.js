@@ -21,7 +21,7 @@ const renderCities = (citiesFromLocalStorage) => {
 };
 
 const constructListItem = (index, cityName) => {
-  const listItem = `<li class="list-group-item">${
+  const listItem = `<li class="list-group-item history-list">${
     cityName.charAt(0).toUpperCase() + cityName.substr(1).toLowerCase()
   }</li>`;
   $("#searchHistoryDiv").append(listItem);

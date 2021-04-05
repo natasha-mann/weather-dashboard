@@ -71,3 +71,7 @@ header {
   background-color: var(--dark-teal);
   color: white;
 }
+
+.history-list {
+  cursor: pointer;
+}
