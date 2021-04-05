@@ -10,6 +10,7 @@ const onSearch = (event) => {
   const citiesFromLocalStorage = getFromLocalStorage();
   renderCities(citiesFromLocalStorage);
   fetchWeatherData(cityName);
+  $("#cityForm").trigger("reset");
 };
 
 // function to store user searches in local storage
