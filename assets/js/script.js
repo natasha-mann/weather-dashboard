@@ -20,6 +20,7 @@ const storeCityNames = (cityName) => {
 };
 
 const renderCities = (citiesFromLocalStorage) => {
+  citiesFromLocalStorage.reverse();
   $(citiesFromLocalStorage).each(constructListItem);
 };
 
@@ -197,7 +198,7 @@ const onLoad = () => {
   if (citiesFromLocalStorage) {
     renderCities(citiesFromLocalStorage);
   }
-  const cityName = citiesFromLocalStorage[citiesFromLocalStorage.length - 1];
+  const cityName = citiesFromLocalStorage[0];
   if (cityName) {
     fetchWeatherData(cityName);
   }
