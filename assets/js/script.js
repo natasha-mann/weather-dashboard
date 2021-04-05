@@ -7,8 +7,11 @@ const onSearch = (event) => {
   $("#current-weather").empty();
   $("#forecastCardDiv").empty();
   $("#searchHistoryDiv").empty();
+  $("#error-div").remove();
+  $("#future-weather-heading").empty();
   const citiesFromLocalStorage = getFromLocalStorage();
   renderCities(citiesFromLocalStorage);
+
   fetchWeatherData(cityName);
   $("#cityForm").trigger("reset");
 };
@@ -52,6 +55,8 @@ const onClick = (event) => {
   const cityName = event.target.textContent;
   $("#current-weather").empty();
   $("#forecastCardDiv").empty();
+  $("#error-div").remove();
+  $("#future-weather-heading").empty();
   fetchWeatherData(cityName);
 };
 
@@ -155,6 +160,19 @@ const constructForecastCardsAndAppend = (item, index) => {
   return forecastCard;
 };
 
+const createErrorMessage = () => {
+  const errorMessage = `<div id="error-div"
+  class="start-div position-absolute top-50 start-50 translate-middle h-50 w-50"
+>
+  <div class="start-info px-4 py-5 fs-4 text-center">
+  <h2> Oh no! We can't find your city!</h2>
+<div> Please check your spelling. If you're still having trouble, there may be an issue on our end. Please check back later!</div>
+  </div>
+</div>`;
+  $("#forecast-col").append(errorMessage);
+  return errorMessage;
+};
+
 // main API calls
 const fetchWeatherData = (cityName) => {
   const weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=785940357963f0488e126bd41a8d1e5c`;
@@ -183,16 +201,16 @@ const fetchWeatherData = (cityName) => {
 
       renderCurrentCardComponent(currentDayData, cityName);
       renderForecastCardComponent(forecastDataArray);
+      $("#future-weather-heading")
+        .append(`<h2 class="row px-3 m-0 fw-bold forecast-heading">
+    5 Day Forecast:
+  </h2>`);
     };
 
     const functionToHandleError = () => {
-      $(".start-div").empty();
       $("#current-weather").empty();
       $("#forecastCardDiv").empty();
-      $(".start-div").append(`
-    <h2> Oh no! We can't find your city!</h2>
-    <div> Please check your spelling. If you're still having trouble, there may be an issue on our end. Please check back later!</div>
-    `);
+      createErrorMessage();
     };
 
     fetch(oneApiUrl)
@@ -202,13 +220,9 @@ const fetchWeatherData = (cityName) => {
   };
 
   const functionToHandleError = (errorObject) => {
-    $(".start-div").empty();
     $("#current-weather").empty();
     $("#forecastCardDiv").empty();
-    $(".start-div").append(`
-    <h2> Oh no! We can't find your city!</h2>
-    <div> Please check your spelling. If you're still having trouble, there may be an issue on our end. Please check back later!</div>
-    `);
+    createErrorMessage();
   };
 
   fetch(weatherApiUrl)
@@ -226,10 +240,6 @@ const onLoad = () => {
   const cityName = citiesFromLocalStorage[0];
   if (cityName) {
     $(".start-div").remove();
-    $("#future-weather-heading")
-      .append(`<h2 class="row px-3 m-0 fw-bold forecast-heading">
-  5 Day Forecast:
-</h2>`);
     fetchWeatherData(cityName);
   }
 };
