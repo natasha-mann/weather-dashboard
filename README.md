@@ -6,6 +6,10 @@
 - [About the Project](#about-the-project)
 - [Additional Features Included](#additional-features-included)
 - [Screenshots](#screenshots)
+  - [Welcome screen](#welcome-screen)
+  - [Full screen image of city search](#full-screen-image-of-city-search)
+  - [Screenshot showing local storage](#screenshot-showing-local-storage)
+  - [Error Message + Network Error](#error-message--network-error)
 
 ## Project Link
 
@@ -26,4 +30,18 @@ When a user searches for a city, the current day's weather for that city is disp
 
 ## Screenshots
 
-![image]()
+### Welcome screen
+
+![image](./assets/images/screenshot1.png)
+
+### Full screen image of city search
+
+![image](./assets/images/screenshot2.png)
+
+### Screenshot showing local storage
+
+![image](./assets/images/screenshot3.png)
+
+### Error Message + Network Error
+
+![image](./assets/images/screenshot4.PNG)

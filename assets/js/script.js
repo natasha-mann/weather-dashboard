@@ -203,8 +203,8 @@ const fetchWeatherData = (cityName) => {
       renderForecastCardComponent(forecastDataArray);
       $("#future-weather-heading")
         .append(`<h2 class="row px-3 m-0 fw-bold forecast-heading">
-    5 Day Forecast:
-  </h2>`);
+      5 Day Forecast:
+    </h2>`);
     };
 
     const functionToHandleError = () => {
