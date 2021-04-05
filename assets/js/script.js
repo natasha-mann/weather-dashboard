@@ -1,5 +1,5 @@
-// function for when the submit button is clicked
-const onSubmit = (event) => {
+// function for when the search button is clicked
+const onSearch = (event) => {
   // event.preventDefault();
   const cityName = $("#cityInput").val().toLowerCase();
   storeCityNames(cityName);
@@ -9,6 +9,7 @@ const onSubmit = (event) => {
   fetchWeatherData(cityName);
 };
 
+// function to store user searches in local storage
 const storeCityNames = (cityName) => {
   if (cityName !== "") {
     const cityNamesArray = getFromLocalStorage();
@@ -19,6 +20,7 @@ const storeCityNames = (cityName) => {
   }
 };
 
+// function to display search history list
 const renderCities = (citiesFromLocalStorage) => {
   citiesFromLocalStorage.reverse();
   $(citiesFromLocalStorage).each(constructListItem);
@@ -41,7 +43,7 @@ const getFromLocalStorage = () => {
   }
 };
 
-// function for clicking on search history
+// function to render weather items when clicking on search history
 const onClick = (event) => {
   const cityName = event.target.textContent;
   $("#current-weather").empty();
@@ -61,7 +63,7 @@ const convertDateTime = (dateString) => {
     .split(" / "));
 };
 
-// set object for current weather card
+// extract needed data from api call to construct current weather card
 const getCurrentDayWeather = (oneApiData) => {
   convertTemperature(oneApiData.current.temp);
   convertDateTime(oneApiData.current.dt);
@@ -75,7 +77,7 @@ const getCurrentDayWeather = (oneApiData) => {
   };
 };
 
-// iterate over forecast data array and set object
+// iterate over forecast data array and extract needed data from api call to construct future weather card
 const getForecastData = (oneApiData) => {
   const forecastData = oneApiData.daily.map(constructForecastObject);
   return forecastData;
@@ -149,6 +151,7 @@ const constructForecastCardsAndAppend = (item, index) => {
   return forecastCard;
 };
 
+// main API calls
 const fetchWeatherData = (cityName) => {
   const weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=785940357963f0488e126bd41a8d1e5c`;
 
@@ -228,5 +231,5 @@ const onLoad = () => {
 };
 
 $("#searchHistoryDiv").click(onClick);
-$("#cityForm").submit(onSubmit);
+$("#cityForm").submit(onSearch);
 $(document).ready(onLoad);
