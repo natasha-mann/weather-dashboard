@@ -84,8 +84,6 @@ const renderCurrentCardComponent = (currentDayData, cityName) => {
 </div>`;
   $("#current-weather").append(currentCardComponent);
   if (currentDayData.uvIndex >= 1 && currentDayData.uvIndex < 3) {
-    console.log($(".uv"));
-    console.log($("#temp"));
     $(".uv").addClass("low-uv");
   } else if (currentDayData.uvIndex >= 3 && currentDayData.uvIndex < 6) {
     $(".uv").removeClass("low-uv").addClass("mid-uv");
