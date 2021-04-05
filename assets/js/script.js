@@ -1,16 +1,21 @@
 // function for when the submit button is clicked
 const onSubmit = (event) => {
-  // event.preventDefault();
+  event.preventDefault();
   const cityName = $("#cityInput").val();
   storeCityNames(cityName);
+  $("#current-weather").empty();
+  $("#forecastCardDiv").empty();
   fetchWeatherData(cityName);
 };
 
 const storeCityNames = (cityName) => {
   if (cityName !== "") {
     const cityNamesArray = getFromLocalStorage();
-    cityNamesArray.push(cityName);
-    localStorage.setItem("cityNames", JSON.stringify(cityNamesArray));
+    console.log(cityNamesArray);
+    if (!cityNamesArray.includes(cityName)) {
+      cityNamesArray.push(cityName);
+      localStorage.setItem("cityNames", JSON.stringify(cityNamesArray));
+    }
   } else {
     console.log("You must enter a city name");
   }
@@ -195,7 +200,9 @@ const onLoad = () => {
     renderCities(citiesFromLocalStorage);
   }
   const cityName = citiesFromLocalStorage[citiesFromLocalStorage.length - 1];
-  fetchWeatherData(cityName);
+  if (cityName) {
+    fetchWeatherData(cityName);
+  }
 };
 
 $("#searchHistoryDiv").click(onClick);
