@@ -68,12 +68,9 @@ const constructForecastObject = (item) => {
 
 const renderCurrentCardComponent = (currentDayData, cityName) => {
   const currentDate = currentDayData.date;
-  // const factoredDate = new Date(currentDate * 1000);
-  // const stringDate = factoredDate.toDateString();
   let [date, month, year] = new Date(currentDate * 1000)
     .toLocaleDateString("en-UK")
     .split(" / ");
-  console.log([date, month, year]);
   const currentCardComponent = `<h2 class="mt-4" id="cityName">${cityName} <span id="currentDate">${[
     date,
   ]}</span
@@ -82,10 +79,23 @@ const renderCurrentCardComponent = (currentDayData, cityName) => {
 <div id="temp">Temperature: ${currentDayData.temperature} </div>
 <div id="humidity">Humidity: ${currentDayData.humidity} </div>
 <div id="windSpeed">Wind Speed: ${currentDayData.windSpeed} </div>
-<div id="uv">UV Index: ${currentDayData.uvIndex} </div>
+<div
+>UV Index: <span id="uv" class="uv"> ${currentDayData.uvIndex}</span></div>
 </div>`;
-
   $("#current-weather").append(currentCardComponent);
+  if (currentDayData.uvIndex >= 1 && currentDayData.uvIndex < 3) {
+    console.log($(".uv"));
+    console.log($("#temp"));
+    $(".uv").addClass("low-uv");
+  } else if (currentDayData.uvIndex >= 3 && currentDayData.uvIndex < 6) {
+    $(".uv").removeClass("low-uv").addClass("mid-uv");
+  } else if (currentDayData.uvIndex >= 6 && currentDayData.uvIndex < 8) {
+    $(".uv").removeClass("mid-uv").addClass("high-uv");
+  } else if (currentDayData.uvIndex >= 8 && currentDayData.uvIndex < 11) {
+    $(".uv").removeClass("high-uv").addClass("very-high-uv");
+  } else if (currentDayData.uvIndex >= 11) {
+    $(".uv").removeClass("very-high-uv").addClass("extra-high-uv");
+  }
   return currentCardComponent;
 };
 
@@ -143,7 +153,6 @@ const onLoad = () => {
     renderCities(citiesFromLocalStorage);
   }
   const cityName = citiesFromLocalStorage[citiesFromLocalStorage.length - 1];
-  console.log(cityName);
   fetchWeatherData(cityName);
 };
 

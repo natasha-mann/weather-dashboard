@@ -34,3 +34,30 @@ header {
 .future-weather {
   background-color: var(--light-salmon);
 }
+
+.uv {
+  border-radius: 15%;
+  padding: 5px;
+}
+
+.low-uv {
+  background-color: lightgreen;
+}
+
+.mid-uv {
+  background-color: yellow;
+}
+
+.high-uv {
+  background-color: orangered;
+}
+
+.very-high-uv {
+  background-color: red;
+  color: white;
+}
+
+.extra-high-uv {
+  background-color: purple;
+  color: white;
+}
