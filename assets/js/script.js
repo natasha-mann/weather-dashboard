@@ -72,9 +72,9 @@ const renderCurrentCardComponent = (currentDayData, cityName) => {
     .toLocaleDateString("en-UK")
     .split(" / ");
   const tempInCelcius = Math.floor(currentDayData.temperature - 273.15);
-  const currentCardComponent = `<h2 class="mt-4" id="cityName">${cityName} <span id="currentDate">${[
-    date,
-  ]}</span
+  const currentCardComponent = `<h2 class="mt-4" id="cityName">${
+    cityName.charAt(0).toUpperCase() + cityName.substr(1).toLowerCase()
+  } <span id="currentDate">${[date]}</span
   ><span id="weatherIcon"><img src="${currentDayData.iconURL}"/> </span>
 </h2>
 <div id="temp">Temperature: ${tempInCelcius} \xB0 C </div>
@@ -98,9 +98,7 @@ const renderCurrentCardComponent = (currentDayData, cityName) => {
   return currentCardComponent;
 };
 
-const renderForecastCardComponent = (forecastData) => {
-  // from current data build the current card component
-};
+const renderForecastCardComponent = (forecastData) => {};
 
 const fetchWeatherData = (cityName) => {
   const weatherApiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=785940357963f0488e126bd41a8d1e5c`;
@@ -122,7 +120,7 @@ const fetchWeatherData = (cityName) => {
       const forecastDataArray = getForecastData(oneApiData);
 
       renderCurrentCardComponent(currentDayData, cityName);
-      // renderForecastCardComponent(forecastData);
+      renderForecastCardComponent(forecastData);
     };
 
     const functionToHandleError = (errorObject) => {
