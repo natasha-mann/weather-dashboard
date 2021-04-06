@@ -107,7 +107,7 @@ const constructForecastObject = (item) => {
 };
 
 const renderCurrentCardComponent = (currentDayData, cityName) => {
-  const currentCardComponent = `<h4 class="my-2 current-city" id="cityName">${
+  const currentCardComponent = `<h4 class="current-city" id="cityName">${
     cityName.charAt(0).toUpperCase() + cityName.substr(1).toLowerCase()
   } <span id="currentDate">- ${currentDayData.date}</span
   ><span id="weatherIcon"><img src="${currentDayData.iconURL}"/> </span>
@@ -202,7 +202,7 @@ const fetchWeatherData = (cityName) => {
       renderCurrentCardComponent(currentDayData, cityName);
       renderForecastCardComponent(forecastDataArray);
       $("#future-weather-heading")
-        .append(`<h4 class="row px-3 m-0 fw-bold forecast-heading">
+        .append(`<h4 class="row m-0 fw-bold forecast-heading">
       5 Day Forecast:
     </h4>`);
     };

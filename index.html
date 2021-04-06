@@ -19,13 +19,13 @@
   </head>
   <body>
     <header class="navbar d-flex justify-content-center">
-      <div class="display-2">Weather Dashboard</div>
+      <div class="display-4">Weather Dashboard</div>
     </header>
     <main id="main">
-      <div class="row main-row">
+      <div class="row p-0 m-0 main-row">
         <aside class="col-lg-3 col-sm-12" id="sidebar-col">
           <form id="cityForm">
-            <div class="input-group mb-3 mt-3">
+            <div class="input-group mb-3 mt-3 px-3">
               <input
                 type="city-input"
                 class="form-control"
@@ -39,7 +39,10 @@
             </div>
           </form>
 
-          <ul class="list-group list-group-flush" id="searchHistoryDiv"></ul>
+          <ul
+            class="list-group list-group-flush px-2"
+            id="searchHistoryDiv"
+          ></ul>
         </aside>
 
         <div class="col-lg-9 col-sm-12" id="forecast-col">
@@ -60,7 +63,10 @@
 
           <div class="future-weather p-3" id="future-weather">
             <div class="py-4" id="future-weather-heading"></div>
-            <div class="row h-50 row-cols-5" id="forecastCardDiv"></div>
+            <div
+              class="row h-50 row-cols-xs-1 row-cols-md-5"
+              id="forecastCardDiv"
+            ></div>
           </div>
         </div>
       </div>
