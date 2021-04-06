@@ -107,36 +107,36 @@ const constructForecastObject = (item) => {
 };
 
 const renderCurrentCardComponent = (currentDayData, cityName) => {
-  const currentCardComponent = `<h2 class="mt-2 current-city" id="cityName">${
+  const currentCardComponent = `<h4 class="my-2 current-city" id="cityName">${
     cityName.charAt(0).toUpperCase() + cityName.substr(1).toLowerCase()
   } <span id="currentDate">- ${currentDayData.date}</span
   ><span id="weatherIcon"><img src="${currentDayData.iconURL}"/> </span>
-</h2>
-<div id="temp" class="current-weather-info">Temperature: ${
+</h4>
+<div id="temp" class=" current-weather-info">Temperature: ${
     currentDayData.temperature
   } \xB0 C </div>
 <div id="humidity" class="current-weather-info">Humidity: ${
     currentDayData.humidity
   }% </div>
-<div id="windSpeed" class="current-weather-info">Wind Speed: ${
+<div id="windSpeed" class=" current-weather-info">Wind Speed: ${
     currentDayData.windSpeed
   } mph </div>
 <div
-class="current-weather-info" >UV Index: <span id="uv" class="uv class="current-weather-info> ${
+class="current-weather-info" >UV Index: <span id="uv" class="rounded current-weather-info"> ${
     currentDayData.uvIndex
   }</span></div>
 </div>`;
   $("#current-weather").append(currentCardComponent);
   if (currentDayData.uvIndex >= 0 && currentDayData.uvIndex < 3) {
-    $(".uv").addClass("low-uv");
+    $("#uv").addClass("low-uv");
   } else if (currentDayData.uvIndex >= 3 && currentDayData.uvIndex < 6) {
-    $(".uv").removeClass("low-uv").addClass("mid-uv");
+    $("#uv").removeClass("low-uv").addClass("mid-uv");
   } else if (currentDayData.uvIndex >= 6 && currentDayData.uvIndex < 8) {
-    $(".uv").removeClass("mid-uv").addClass("high-uv");
+    $("#uv").removeClass("mid-uv").addClass("high-uv");
   } else if (currentDayData.uvIndex >= 8 && currentDayData.uvIndex < 11) {
-    $(".uv").removeClass("high-uv").addClass("very-high-uv");
+    $("#uv").removeClass("high-uv").addClass("very-high-uv");
   } else if (currentDayData.uvIndex >= 11) {
-    $(".uv").removeClass("very-high-uv").addClass("extra-high-uv");
+    $("#uv").removeClass("very-high-uv").addClass("extra-high-uv");
   }
   return currentCardComponent;
 };
@@ -149,8 +149,8 @@ const renderForecastCardComponent = (forecastDataArray) => {
 
 const constructForecastCardsAndAppend = (item, index) => {
   const forecastCard = `<div class="col">
-<div class="card future-card p-2 text-center">
-  <h5 class="card-title">${item[0].date}</h5>
+<div class="card future-card pt-2 text-center">
+  <h6 class="card-title">${item[0].date}</h6>
   <div id="futureWeatherIcon"><img src="${item[0].iconURL}"/></div>
   <div id="futureTemp">Temp: ${item[0].temperature} \xB0 C</div>
   <div id="futureHumidity">Humidity: ${item[0].humidity}%</div>
@@ -165,7 +165,7 @@ const createErrorMessage = () => {
   class="start-div position-absolute top-50 start-50 translate-middle h-50 w-50"
 >
   <div class="start-info px-4 py-5 fs-4 text-center">
-  <h2> Oh no! We can't find your city!</h2>
+  <h3> Oh no! We can't find your city!</h3>
 <div> Please check your spelling. If you're still having trouble, there may be an issue on our end. Please check back later!</div>
   </div>
 </div>`;
@@ -202,9 +202,9 @@ const fetchWeatherData = (cityName) => {
       renderCurrentCardComponent(currentDayData, cityName);
       renderForecastCardComponent(forecastDataArray);
       $("#future-weather-heading")
-        .append(`<h2 class="row px-3 m-0 fw-bold forecast-heading">
+        .append(`<h4 class="row px-3 m-0 fw-bold forecast-heading">
       5 Day Forecast:
-    </h2>`);
+    </h4>`);
     };
 
     const functionToHandleError = () => {

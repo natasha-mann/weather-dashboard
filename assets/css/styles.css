@@ -8,36 +8,23 @@
 
 body {
   height: 100vh;
+  background-color: var(--light-salmon);
 }
 
 header {
   background-color: var(--dark-salmon);
-  height: 15vh;
-}
-
-.navbar-brand {
-  margin-right: 0px;
-}
-
-.main-row {
-  height: 85vh;
 }
 
 #sidebar-col {
   background-color: var(--alice-blue);
 }
 
-.current-weather-card {
+#forecast-col {
   background-color: var(--light-salmon);
 }
 
-.future-weather {
-  background-color: var(--light-salmon);
-}
-
-.uv {
-  border-radius: 15%;
-  padding: 5px;
+#uv {
+  padding: 3px;
 }
 
 .low-uv {
@@ -62,11 +49,6 @@ header {
   color: white;
 }
 
-.current-weather-info {
-  font-size: 1.2rem;
-  line-height: 2rem;
-}
-
 .future-card {
   background-color: var(--dark-teal);
   color: white;
@@ -76,17 +58,17 @@ header {
   cursor: pointer;
 }
 
-.start-div {
+/* .start-div {
   height: 85vh;
   background-color: var(--alice-blue);
-}
+} */
 
 .start-div {
   background-color: var(--dark-teal);
 }
 
-.start-form {
-  top: 80%;
+.start-div {
+  top: 100%;
 }
 
 .start-info {
