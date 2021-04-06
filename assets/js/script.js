@@ -61,27 +61,33 @@ const onClick = (event) => {
 };
 
 // function to convert temp from kelvin to celcius
-const convertTemperature = (kelvin) => {
-  return (tempInCelcius = Math.floor(kelvin - 273.15));
-};
+const convertTemperature = (kelvin) =>
+  (tempInCelcius = Math.floor(kelvin - 273.15));
 
 // function to convert unix date string to a dd/mm/yy format
-const convertDateTime = (dateString) => {
-  return ([date, month, year] = new Date(dateString * 1000)
+const convertDateTime = (dateString) =>
+  ([date, month, year] = new Date(dateString * 1000)
     .toLocaleDateString("en-UK")
     .split(" / "));
+
+// function to convert wind speed from m/s to mph
+const convertWindSpeed = (speed) => {
+  const mph = speed * 2.237;
+  return (roundedSpeed = Math.round(mph * 10) / 10);
 };
 
 // extract needed data from api call to construct current weather card
 const getCurrentDayWeather = (oneApiData) => {
+  console.log(oneApiData);
   convertTemperature(oneApiData.current.temp);
   convertDateTime(oneApiData.current.dt);
+  convertWindSpeed(oneApiData.current.wind_speed);
   return {
     date: [date],
     iconURL: `https://openweathermap.org/img/wn/${oneApiData.current.weather[0].icon}@2x.png`,
     temperature: tempInCelcius,
     humidity: oneApiData.current.humidity,
-    windSpeed: oneApiData.current.wind_speed,
+    windSpeed: roundedSpeed,
     uvIndex: oneApiData.current.uvi,
   };
 };
