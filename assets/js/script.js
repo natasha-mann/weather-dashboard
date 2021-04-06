@@ -177,23 +177,9 @@ const createErrorMessage = () => {
 const fetchWeatherData = (cityName) => {
   const weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=785940357963f0488e126bd41a8d1e5c`;
 
-  const functionForJSON = (responseObject) => {
-    if (responseObject.status !== 200) {
-      throw new Error("Internal Server Error");
-    }
-    return responseObject.json();
-  };
-
-  const functionForApplication = (currentDayData) => {
+  const functionForLonLat = (currentDayData) => {
     const cityLonLat = currentDayData.coord;
     const oneApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${cityLonLat.lat}&lon=${cityLonLat.lon}&appid=785940357963f0488e126bd41a8d1e5c`;
-
-    const functionForJSON = (responseObject) => {
-      if (responseObject.status !== 200) {
-        throw new Error("Internal Server Error");
-      }
-      return responseObject.json();
-    };
 
     const functionForApplication = (oneApiData) => {
       const currentDayData = getCurrentDayWeather(oneApiData);
@@ -207,28 +193,31 @@ const fetchWeatherData = (cityName) => {
     </h4>`);
     };
 
-    const functionToHandleError = () => {
-      $("#current-weather").empty();
-      $("#forecastCardDiv").empty();
-      createErrorMessage();
-    };
-
     fetch(oneApiUrl)
       .then(functionForJSON)
       .then(functionForApplication)
       .catch(functionToHandleError);
   };
 
-  const functionToHandleError = (errorObject) => {
-    $("#current-weather").empty();
-    $("#forecastCardDiv").empty();
-    createErrorMessage();
-  };
-
   fetch(weatherApiUrl)
     .then(functionForJSON)
-    .then(functionForApplication)
+    .then(functionForLonLat)
     .catch(functionToHandleError);
+};
+
+// function for JSON
+const functionForJSON = (responseObject) => {
+  if (responseObject.status !== 200) {
+    throw new Error("Internal Server Error");
+  }
+  return responseObject.json();
+};
+
+// Error Handler function
+const functionToHandleError = (errorObject) => {
+  $("#current-weather").empty();
+  $("#forecastCardDiv").empty();
+  createErrorMessage();
 };
 
 // function called on load of the document
