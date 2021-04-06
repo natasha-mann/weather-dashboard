@@ -66,9 +66,7 @@ const convertTemperature = (kelvin) =>
 
 // function to convert unix date string to a dd/mm/yy format
 const convertDateTime = (dateString) =>
-  ([date, month, year] = new Date(dateString * 1000)
-    .toLocaleDateString("en-UK")
-    .split(" / "));
+  (date = new Date(dateString * 1000).toLocaleDateString("en-UK"));
 
 // function to convert wind speed from m/s to mph
 const convertWindSpeed = (speed) => {
@@ -78,12 +76,11 @@ const convertWindSpeed = (speed) => {
 
 // extract needed data from api call to construct current weather card
 const getCurrentDayWeather = (oneApiData) => {
-  console.log(oneApiData);
   convertTemperature(oneApiData.current.temp);
   convertDateTime(oneApiData.current.dt);
   convertWindSpeed(oneApiData.current.wind_speed);
   return {
-    date: [date],
+    date: date,
     iconURL: `https://openweathermap.org/img/wn/${oneApiData.current.weather[0].icon}@2x.png`,
     temperature: tempInCelcius,
     humidity: oneApiData.current.humidity,
@@ -103,7 +100,7 @@ const constructForecastObject = (item) => {
   convertDateTime(item.dt);
   const forecastObject = [
     {
-      date: [date],
+      date: date,
       iconURL: `https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`,
       temperature: tempInCelcius,
       humidity: item.humidity,
@@ -113,7 +110,7 @@ const constructForecastObject = (item) => {
 };
 
 const renderCurrentCardComponent = (currentDayData, cityName) => {
-  const currentCardComponent = `<h4 class="current-city" id="cityName">${
+  const currentCardComponent = `<h4 class="current-city pt-2" id="cityName">${
     cityName.charAt(0).toUpperCase() + cityName.substr(1).toLowerCase()
   } <span id="currentDate">- ${currentDayData.date}</span
   ><span id="weatherIcon"><img src="${currentDayData.iconURL}"/> </span>
