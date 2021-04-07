@@ -5,6 +5,7 @@
 - [Project Link](#project-link)
 - [About the Project](#about-the-project)
 - [Additional Features Included](#additional-features-included)
+- [Areas to Improve](#areas-to-improve)
 - [Screenshots](#screenshots)
   - [Welcome screen](#welcome-screen)
   - [Full screen image of city search](#full-screen-image-of-city-search)
@@ -27,6 +28,14 @@ When a user searches for a city, the current day's weather for that city is disp
 - Logic to ensure that a city is only added to storage if it is not already present.
 - Logic to sort the saved search array so that most recent searches are displayed at the top of the rendered list.
 - Error handling for "bad searches" which displays an error message on screen for the user.
+
+## Areas to Improve
+
+If I had more time to work on this project in the future, there are a few things I would like to change and/or add:
+
+- Stop "bad searches" being added to local storage and appearing in the search history list on screen.
+- Add additional parameters for catching errors, depending on the type of error returned from the server.
+- There is a problem with the future forecast when looking at cities in timezones which are quite far ahead of UK time - it results in the wrong day being displayed in the 5 day forecast (skipping a day).
 
 ## Screenshots
 
