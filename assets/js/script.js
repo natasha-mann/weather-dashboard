@@ -2,7 +2,7 @@
 const onSearch = (event) => {
   event.preventDefault();
   const cityName = $("#cityInput").val().toLowerCase();
-  storeCityNames(cityName);
+
   $(".start-div").remove();
   $("#current-weather").empty();
   $("#forecastCardDiv").empty();
@@ -10,9 +10,12 @@ const onSearch = (event) => {
   $("#error-div").remove();
   $("#future-weather-heading").empty();
   const citiesFromLocalStorage = getFromLocalStorage();
+
+  getDataAndRenderWeather(cityName);
+
+  storeCityNames(cityName);
   renderCities(citiesFromLocalStorage);
 
-  fetchWeatherData(cityName);
   $("#cityForm").trigger("reset");
 };
 
@@ -30,7 +33,8 @@ const storeCityNames = (cityName) => {
 // function to display search history list
 const renderCities = (citiesFromLocalStorage) => {
   citiesFromLocalStorage.reverse();
-  $(citiesFromLocalStorage).each(constructListItem);
+  const cityList = $(citiesFromLocalStorage).each(constructListItem);
+  return cityList;
 };
 
 const constructListItem = (index, cityName) => {
@@ -57,7 +61,7 @@ const onClick = (event) => {
   $("#forecastCardDiv").empty();
   $("#error-div").remove();
   $("#future-weather-heading").empty();
-  fetchWeatherData(cityName);
+  getDataAndRenderWeather(cityName);
 };
 
 // function to convert temp from kelvin to celcius
@@ -75,23 +79,23 @@ const convertWindSpeed = (speed) => {
 };
 
 // extract needed data from api call to construct current weather card
-const getCurrentDayWeather = (oneApiData) => {
-  convertTemperature(oneApiData.current.temp);
-  convertDateTime(oneApiData.current.dt);
-  convertWindSpeed(oneApiData.current.wind_speed);
+const getCurrentDayWeather = (futureWeatherData) => {
+  convertTemperature(futureWeatherData.current.temp);
+  convertDateTime(futureWeatherData.current.dt);
+  convertWindSpeed(futureWeatherData.current.wind_speed);
   return {
     date: date,
-    iconURL: `https://openweathermap.org/img/wn/${oneApiData.current.weather[0].icon}@2x.png`,
+    iconURL: `https://openweathermap.org/img/wn/${futureWeatherData.current.weather[0].icon}@2x.png`,
     temperature: tempInCelcius,
-    humidity: oneApiData.current.humidity,
+    humidity: futureWeatherData.current.humidity,
     windSpeed: roundedSpeed,
-    uvIndex: oneApiData.current.uvi,
+    uvIndex: futureWeatherData.current.uvi,
   };
 };
 
 // iterate over forecast data array and extract needed data from api call to construct future weather card
-const getForecastData = (oneApiData) => {
-  const forecastData = oneApiData.daily.map(constructForecastObject);
+const getForecastData = (futureWeatherData) => {
+  const forecastData = futureWeatherData.daily.map(constructForecastObject);
   return forecastData;
 };
 
@@ -177,54 +181,56 @@ const createErrorMessage = () => {
 };
 
 // main API calls
-const fetchWeatherData = (cityName) => {
-  const weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=785940357963f0488e126bd41a8d1e5c`;
+const fetchData = async (url) => {
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    createErrorMessage();
+  }
+};
 
-  const functionForLonLat = (currentDayData) => {
-    const cityLonLat = currentDayData.coord;
-    const oneApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${cityLonLat.lat}&lon=${cityLonLat.lon}&appid=785940357963f0488e126bd41a8d1e5c`;
+//function to build URL to get data for country card
+const createWeatherApiUrl = (cityName) => {
+  return `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=785940357963f0488e126bd41a8d1e5c`;
+};
 
-    const functionForApplication = (oneApiData) => {
-      const currentDayData = getCurrentDayWeather(oneApiData);
-      const forecastDataArray = getForecastData(oneApiData);
+//function to build URL to get data for vaccines and currency converter
+const createLonLatUrl = (currentDayData) => {
+  const cityLonLat = currentDayData.coord;
+  if (cityLonLat) {
+    return `https://api.openweathermap.org/data/2.5/onecall?lat=${cityLonLat.lat}&lon=${cityLonLat.lon}&appid=785940357963f0488e126bd41a8d1e5c`;
+  }
+};
 
-      renderCurrentCardComponent(currentDayData, cityName);
-      renderForecastCardComponent(forecastDataArray);
-      $("#future-weather-heading")
-        .append(`<h4 class="row m-0 fw-bold forecast-heading">
+// render and append all weather info
+const renderAllCarsAndAppend = (futureWeatherData, cityName) => {
+  const currentDayData = getCurrentDayWeather(futureWeatherData);
+  const forecastDataArray = getForecastData(futureWeatherData);
+
+  renderCurrentCardComponent(currentDayData, cityName);
+  renderForecastCardComponent(forecastDataArray);
+  $("#future-weather-heading")
+    .append(`<h4 class="row m-0 fw-bold forecast-heading">
       5 Day Forecast:
     </h4>`);
-    };
-
-    fetch(oneApiUrl)
-      .then(functionForJSON)
-      .then(functionForApplication)
-      .catch(functionToHandleError);
-  };
-
-  fetch(weatherApiUrl)
-    .then(functionForJSON)
-    .then(functionForLonLat)
-    .catch(functionToHandleError);
 };
 
-// function for JSON
-const functionForJSON = (responseObject) => {
-  if (responseObject.status !== 200) {
-    throw new Error("Internal Server Error");
-  }
-  return responseObject.json();
-};
+// get all data and append cards
+const getDataAndRenderWeather = async (cityName) => {
+  const urlForCurrentWeather = createWeatherApiUrl(cityName);
+  const currentWeatherData = await fetchData(urlForCurrentWeather);
 
-// Error Handler function
-const functionToHandleError = (errorObject) => {
-  $("#current-weather").empty();
-  $("#forecastCardDiv").empty();
-  createErrorMessage();
+  // create URL + fetch data for future weather data
+  const urlForFutureWeather = createLonLatUrl(currentWeatherData);
+  const futureWeatherData = await fetchData(urlForFutureWeather);
+
+  renderAllCarsAndAppend(futureWeatherData, cityName);
 };
 
 // function called on load of the document
-const onLoad = () => {
+const onLoad = async () => {
   const citiesFromLocalStorage = getFromLocalStorage();
   if (citiesFromLocalStorage) {
     renderCities(citiesFromLocalStorage);
@@ -232,7 +238,7 @@ const onLoad = () => {
   const cityName = citiesFromLocalStorage[0];
   if (cityName) {
     $(".start-div").remove();
-    fetchWeatherData(cityName);
+    getDataAndRenderWeather(cityName);
   }
 };
 
