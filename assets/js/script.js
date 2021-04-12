@@ -1,5 +1,5 @@
 // function for when the search button is clicked
-const onSearch = (event) => {
+const onSearch = async (event) => {
   event.preventDefault();
   const cityName = $("#cityInput").val().toLowerCase();
 
@@ -9,11 +9,11 @@ const onSearch = (event) => {
   $("#searchHistoryDiv").empty();
   $("#error-div").remove();
   $("#future-weather-heading").empty();
+
+  const response = await getDataAndRenderWeather(cityName);
+  if (response) storeCityNames(cityName);
+
   const citiesFromLocalStorage = getFromLocalStorage();
-
-  getDataAndRenderWeather(cityName);
-
-  storeCityNames(cityName);
   renderCities(citiesFromLocalStorage);
 
   $("#cityForm").trigger("reset");
@@ -221,12 +221,17 @@ const renderAllCarsAndAppend = (futureWeatherData, cityName) => {
 const getDataAndRenderWeather = async (cityName) => {
   const urlForCurrentWeather = createWeatherApiUrl(cityName);
   const currentWeatherData = await fetchData(urlForCurrentWeather);
-
   // create URL + fetch data for future weather data
-  const urlForFutureWeather = createLonLatUrl(currentWeatherData);
-  const futureWeatherData = await fetchData(urlForFutureWeather);
+  if (currentWeatherData.cod === 200) {
+    const urlForFutureWeather = createLonLatUrl(currentWeatherData);
+    const futureWeatherData = await fetchData(urlForFutureWeather);
 
-  renderAllCarsAndAppend(futureWeatherData, cityName);
+    renderAllCarsAndAppend(futureWeatherData, cityName);
+    return true;
+  } else {
+    createErrorMessage();
+    return false;
+  }
 };
 
 // function called on load of the document
