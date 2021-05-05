@@ -40,9 +40,7 @@ const renderCities = (citiesFromLocalStorage) => {
     $("#searchHistoryDiv").append(listItem);
   };
 
-  citiesFromLocalStorage.reverse();
-
-  citiesFromLocalStorage.forEach(constructListItem);
+  citiesFromLocalStorage.reverse().forEach(constructListItem);
 };
 
 const getFromLocalStorage = () => {
