@@ -186,16 +186,12 @@ const fetchData = async (url) => {
   }
 };
 
-//function to build URL to get data for country card
-const createWeatherApiUrl = (cityName) => {
-  return `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=785940357963f0488e126bd41a8d1e5c`;
-};
+const createWeatherApiUrl = (cityName) =>
+  `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=785940357963f0488e126bd41a8d1e5c`;
 
-//function to build URL to get data for vaccines and currency converter
-const createLonLatUrl = (currentDayData) => {
-  const cityLonLat = currentDayData.coord;
-  if (cityLonLat) {
-    return `https://api.openweathermap.org/data/2.5/onecall?lat=${cityLonLat.lat}&lon=${cityLonLat.lon}&appid=785940357963f0488e126bd41a8d1e5c`;
+const createLonLatUrl = ({ coord }) => {
+  if (coord) {
+    return `https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&appid=785940357963f0488e126bd41a8d1e5c`;
   }
 };
 
@@ -212,20 +208,17 @@ const renderAllCarsAndAppend = (futureWeatherData, cityName) => {
     </h4>`);
 };
 
-// get all data and append cards
 const getDataAndRenderWeather = async (cityName) => {
   const urlForCurrentWeather = createWeatherApiUrl(cityName);
   const currentWeatherData = await fetchData(urlForCurrentWeather);
-  // create URL + fetch data for future weather data
+
   if (currentWeatherData.cod === 200) {
     const urlForFutureWeather = createLonLatUrl(currentWeatherData);
     const futureWeatherData = await fetchData(urlForFutureWeather);
 
     renderAllCarsAndAppend(futureWeatherData, cityName);
-    return true;
   } else {
     createErrorMessage();
-    return false;
   }
 };
 
