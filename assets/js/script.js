@@ -46,12 +46,9 @@ const constructListItem = (index, cityName) => {
 };
 
 const getFromLocalStorage = () => {
-  const citiesFromLocalStorage = localStorage.getItem("cityNames");
-  if (citiesFromLocalStorage) {
-    return JSON.parse(citiesFromLocalStorage);
-  } else {
-    return [];
-  }
+  const citiesFromLocalStorage = JSON.parse(localStorage.getItem("cityNames"));
+
+  return citiesFromLocalStorage ? citiesFromLocalStorage : [];
 };
 
 // function to render weather items when clicking on search history
