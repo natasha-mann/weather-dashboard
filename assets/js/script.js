@@ -32,6 +32,7 @@ const storeCityNames = (cityName) => {
 
 // function to display search history list
 const renderCities = (citiesFromLocalStorage) => {
+  console.log("NOT HERE");
   citiesFromLocalStorage.reverse();
   const cityList = $(citiesFromLocalStorage).each(constructListItem);
   return cityList;
@@ -231,16 +232,18 @@ const getDataAndRenderWeather = async (cityName) => {
   }
 };
 
-// function called on load of the document
 const onLoad = async () => {
   const citiesFromLocalStorage = getFromLocalStorage();
-  if (citiesFromLocalStorage) {
+
+  if (citiesFromLocalStorage.length) {
     renderCities(citiesFromLocalStorage);
-  }
-  const cityName = citiesFromLocalStorage[0];
-  if (cityName) {
-    $(".start-div").remove();
-    getDataAndRenderWeather(cityName);
+
+    const cityName = citiesFromLocalStorage[0];
+
+    if (cityName) {
+      $(".start-div").remove();
+      getDataAndRenderWeather(cityName);
+    }
   }
 };
 
