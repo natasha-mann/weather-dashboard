@@ -30,20 +30,19 @@ const storeCityNames = (cityName) => {
   }
 };
 
-// function to display search history list
 const renderCities = (citiesFromLocalStorage) => {
-  console.log("NOT HERE");
-  citiesFromLocalStorage.reverse();
-  const cityList = $(citiesFromLocalStorage).each(constructListItem);
-  return cityList;
-};
+  const constructListItem = (cityName) => {
+    const city = `${cityName.charAt(0).toUpperCase()}${cityName
+      .substr(1)
+      .toLowerCase()}`;
+    const listItem = `<li class="list-group-item history-list">${city}</li>`;
 
-const constructListItem = (index, cityName) => {
-  const listItem = `<li class="list-group-item history-list">${
-    cityName.charAt(0).toUpperCase() + cityName.substr(1).toLowerCase()
-  }</li>`;
-  $("#searchHistoryDiv").append(listItem);
-  return listItem;
+    $("#searchHistoryDiv").append(listItem);
+  };
+
+  citiesFromLocalStorage.reverse();
+
+  citiesFromLocalStorage.forEach(constructListItem);
 };
 
 const getFromLocalStorage = () => {
