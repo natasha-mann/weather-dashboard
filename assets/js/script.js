@@ -175,12 +175,10 @@ const createErrorMessage = () => {
   return errorMessage;
 };
 
-// main API calls
 const fetchData = async (url) => {
   try {
     const response = await fetch(url);
-    const data = await response.json();
-    return data;
+    return response.json();
   } catch (error) {
     createErrorMessage();
   }
