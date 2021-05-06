@@ -226,6 +226,7 @@ const getDataAndRenderWeather = async (cityName) => {
     const urlForFutureWeather = createLonLatUrl(currentWeatherData);
     const futureWeatherData = await fetchData(urlForFutureWeather);
 
+    $(".start-div").remove();
     renderAllCarsAndAppend(futureWeatherData, cityName);
     return true;
   } else {
@@ -242,7 +243,6 @@ const onLoad = async () => {
   }
   const cityName = citiesFromLocalStorage[0];
   if (cityName) {
-    $(".start-div").remove();
     getDataAndRenderWeather(cityName);
   }
 };
