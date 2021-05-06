@@ -1,5 +1,6 @@
 const renderCurrentCardComponent = (currentDayData, cityName) => {
   const currentCardComponent = `
+  <div class = "card border-0 bg-transparent px-3">
   <h4 class="current-city pt-2" id="cityName">${
     cityName.charAt(0).toUpperCase() + cityName.substr(1).toLowerCase()
   } 
@@ -20,6 +21,7 @@ const renderCurrentCardComponent = (currentDayData, cityName) => {
     <span id="uv" class="fw-normal rounded current-weather-info">
       ${currentDayData.uvIndex}
     </span>
+  </div>
   </div>`;
 
   $("#current-weather").append(currentCardComponent);
@@ -40,7 +42,7 @@ const renderForecastCardComponent = (forecastDataArray) => {
   const constructForecastCardsAndAppend = (item) => {
     const forecastCard = `
   <div class="col">
-    <div class="card future-card pt-2 text-center">
+    <div class="card future-card py-3 text-center">
       <h6 class="card-title">${item.date}</h6>
       <div id="futureWeatherIcon">
         <img src="${item.iconURL}"/>
