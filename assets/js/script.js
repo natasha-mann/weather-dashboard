@@ -149,22 +149,22 @@ class="current-weather-info" >UV Index: <span id="uv" class="rounded current-wea
 };
 
 const renderForecastCardComponent = (forecastDataArray) => {
-  forecastDataArray.shift();
-  forecastDataArray.length = 5;
-  forecastDataArray.forEach(constructForecastCardsAndAppend);
-};
+  const constructForecastCardsAndAppend = (item) => {
+    const forecastCard = `
+  <div class="col">
+    <div class="card future-card pt-2 text-center">
+      <h6 class="card-title">${item.date}</h6>
+      <div id="futureWeatherIcon">
+        <img src="${item.iconURL}"/>
+      </div>
+      <div class="fw-bold" id="futureTemp">Temp: <span>${item.temperature} \xB0 C</span></div>
+      <div class="fw-bold" id="futureHumidity">Humidity: <span>${item.humidity}%</span></div>
+    </div>
+  </div>`;
+    $("#forecastCardDiv").append(forecastCard);
+  };
 
-const constructForecastCardsAndAppend = (item, index) => {
-  const forecastCard = `<div class="col">
-<div class="card future-card pt-2 text-center">
-  <h6 class="card-title">${item[0].date}</h6>
-  <div id="futureWeatherIcon"><img src="${item[0].iconURL}"/></div>
-  <div id="futureTemp">Temp: ${item[0].temperature} \xB0 C</div>
-  <div id="futureHumidity">Humidity: ${item[0].humidity}%</div>
-</div>
-</div>`;
-  $("#forecastCardDiv").append(forecastCard);
-  return forecastCard;
+  forecastDataArray.slice(1, 6).forEach(constructForecastCardsAndAppend);
 };
 
 const createErrorMessage = () => {
@@ -177,10 +177,8 @@ const createErrorMessage = () => {
   </div>
 </div>`;
   $("#forecast-col").append(errorMessage);
-  return errorMessage;
 };
 
-// main API calls
 const fetchData = async (url) => {
   try {
     const response = await fetch(url);
@@ -190,18 +188,15 @@ const fetchData = async (url) => {
   }
 };
 
-//function to build URL to get data for country card
 const createWeatherApiUrl = (cityName) =>
   `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=785940357963f0488e126bd41a8d1e5c`;
 
-//function to build URL to get data for vaccines and currency converter
 const createLonLatUrl = ({ coord }) => {
   if (coord) {
     return `https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&appid=785940357963f0488e126bd41a8d1e5c`;
   }
 };
 
-// render and append all weather info
 const renderAllCardsAndAppend = (futureWeatherData, cityName) => {
   const currentDayData = getCurrentDayWeather(futureWeatherData);
   const forecastDataArray = getForecastData(futureWeatherData);
