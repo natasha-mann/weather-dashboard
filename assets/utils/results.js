@@ -10,6 +10,12 @@ import {
   renderCities,
 } from "./renderCards.js";
 
+const getUrlParams = () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const cityName = urlParams.get("city");
+  return cityName;
+};
+
 const onSearch = async (event) => {
   event.preventDefault();
   const cityName = $("#cityInput").val().toLowerCase();
@@ -135,11 +141,12 @@ const getDataAndRenderWeather = async (cityName) => {
 };
 
 const onLoad = async () => {
-  const citiesFromLocalStorage = getFromLocalStorage();
-  if (citiesFromLocalStorage.length) {
-    renderCities(citiesFromLocalStorage);
-  }
-  const cityName = citiesFromLocalStorage[0];
+  const cityName = getUrlParams();
+  // const citiesFromLocalStorage = getFromLocalStorage();
+  // if (citiesFromLocalStorage.length) {
+  //   renderCities(citiesFromLocalStorage);
+  // }
+  // const cityName = citiesFromLocalStorage[0];
   if (cityName) {
     getDataAndRenderWeather(cityName);
   }

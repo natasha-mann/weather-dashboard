@@ -1,4 +1,4 @@
-const RESULTS_URL = "./results.js?city=";
+const RESULTS_URL = "./results.html?city=";
 
 const handleSearch = (event) => {
   event.preventDefault();
@@ -12,9 +12,9 @@ const handleSearch = (event) => {
   }
 };
 
-const initialisePage = () => {
-  initialiseLocalStorage();
-};
+// const initialisePage = () => {
+//   initialiseLocalStorage();
+// };
 
-$("#start-form").on("submit", handleSearch);
-$(document).ready(initialisePage);
+$("#cityForm").on("submit", handleSearch);
+// $(document).ready(initialisePage);
