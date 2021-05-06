@@ -22,41 +22,46 @@
       <div class="display-4">Weather Dashboard</div>
     </header>
 
-    <div class="container">
-      <div class="row">
-        <div class="col-8">
-          <div
-            class="start-div card text-light px-4 w-50 position-absolute top-50 start-50 translate-middle"
-            id="start-div"
-          >
-            <div class="card-body">
-              <p class="card-text fs-4 py-3 text-center">
-                Welcome to the weather dashboard. Here you can check the current
-                weather and get a 5 day forecast for the city of your choice.
-              </p>
-              <p class="card-text fs-4 py-3 text-center">
-                Get started by entering a city into the search bar!
-              </p>
-
-              <form id="cityForm">
-                <div class="input-group mb-3 mt-3 px-3">
-                  <input
-                    type="city-input"
-                    class="form-control"
-                    id="cityInput"
-                    aria-describedby="city-input"
-                    placeholder="Search for a city"
-                  />
-                  <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-              </form>
+    <main id="main">
+      <div class="row p-0 m-0 main-row">
+        <aside class="col-lg-3 col-sm-12 mt-4" id="sidebar-col">
+          <form id="cityForm">
+            <div class="input-group mb-3 mt-3 px-3">
+              <input
+                type="city-input"
+                class="form-control"
+                id="cityInput"
+                aria-describedby="city-input"
+                placeholder="Search for a city"
+              />
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search"></i>
+              </button>
             </div>
+          </form>
+
+          <ul
+            class="list-group list-group-flush px-2"
+            id="searchHistoryDiv"
+          ></ul>
+        </aside>
+
+        <div class="col-lg-9 col-sm-12" id="forecast-col">
+          <div
+            class="px-3 current-weather-card current-card"
+            id="current-weather"
+          ></div>
+
+          <div class="future-weather p-3" id="future-weather">
+            <div class="py-4" id="future-weather-heading"></div>
+            <div
+              class="row h-50 row-cols-xs-1 row-cols-md-5"
+              id="forecastCardDiv"
+            ></div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
 
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
