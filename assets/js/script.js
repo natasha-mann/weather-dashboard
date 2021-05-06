@@ -238,7 +238,7 @@ const getDataAndRenderWeather = async (cityName) => {
 // function called on load of the document
 const onLoad = async () => {
   const citiesFromLocalStorage = getFromLocalStorage();
-  if (citiesFromLocalStorage) {
+  if (citiesFromLocalStorage.length) {
     renderCities(citiesFromLocalStorage);
   }
   const cityName = citiesFromLocalStorage[0];
