@@ -184,35 +184,32 @@ const createErrorMessage = () => {
 const fetchData = async (url) => {
   try {
     const response = await fetch(url);
-    const data = await response.json();
-    return data;
+    return response.json();
   } catch (error) {
     createErrorMessage();
   }
 };
 
 //function to build URL to get data for country card
-const createWeatherApiUrl = (cityName) => {
-  return `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=785940357963f0488e126bd41a8d1e5c`;
-};
+const createWeatherApiUrl = (cityName) =>
+  `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=785940357963f0488e126bd41a8d1e5c`;
 
 //function to build URL to get data for vaccines and currency converter
-const createLonLatUrl = (currentDayData) => {
-  const cityLonLat = currentDayData.coord;
-  if (cityLonLat) {
-    return `https://api.openweathermap.org/data/2.5/onecall?lat=${cityLonLat.lat}&lon=${cityLonLat.lon}&appid=785940357963f0488e126bd41a8d1e5c`;
+const createLonLatUrl = ({ coord }) => {
+  if (coord) {
+    return `https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&appid=785940357963f0488e126bd41a8d1e5c`;
   }
 };
 
 // render and append all weather info
-const renderAllCarsAndAppend = (futureWeatherData, cityName) => {
+const renderAllCardsAndAppend = (futureWeatherData, cityName) => {
   const currentDayData = getCurrentDayWeather(futureWeatherData);
   const forecastDataArray = getForecastData(futureWeatherData);
 
   renderCurrentCardComponent(currentDayData, cityName);
   renderForecastCardComponent(forecastDataArray);
-  $("#future-weather-heading")
-    .append(`<h4 class="row m-0 fw-bold forecast-heading">
+  $("#future-weather-heading").append(`
+    <h4 class="row m-0 fw-bold forecast-heading">
       5 Day Forecast:
     </h4>`);
 };
@@ -221,13 +218,13 @@ const renderAllCarsAndAppend = (futureWeatherData, cityName) => {
 const getDataAndRenderWeather = async (cityName) => {
   const urlForCurrentWeather = createWeatherApiUrl(cityName);
   const currentWeatherData = await fetchData(urlForCurrentWeather);
-  // create URL + fetch data for future weather data
+
   if (currentWeatherData.cod === 200) {
     const urlForFutureWeather = createLonLatUrl(currentWeatherData);
     const futureWeatherData = await fetchData(urlForFutureWeather);
 
     $(".start-div").remove();
-    renderAllCarsAndAppend(futureWeatherData, cityName);
+    renderAllCardsAndAppend(futureWeatherData, cityName);
     return true;
   } else {
     createErrorMessage();
@@ -235,7 +232,6 @@ const getDataAndRenderWeather = async (cityName) => {
   }
 };
 
-// function called on load of the document
 const onLoad = async () => {
   const citiesFromLocalStorage = getFromLocalStorage();
   if (citiesFromLocalStorage.length) {
