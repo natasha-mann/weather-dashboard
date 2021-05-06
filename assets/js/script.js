@@ -1,4 +1,3 @@
-// function for when the search button is clicked
 const onSearch = async (event) => {
   event.preventDefault();
   const cityName = $("#cityInput").val().toLowerCase();
@@ -19,7 +18,6 @@ const onSearch = async (event) => {
   $("#cityForm").trigger("reset");
 };
 
-// function to store user searches in local storage
 const storeCityNames = (cityName) => {
   if (cityName !== "") {
     const cityNamesArray = getFromLocalStorage();
@@ -30,31 +28,25 @@ const storeCityNames = (cityName) => {
   }
 };
 
-// function to display search history list
 const renderCities = (citiesFromLocalStorage) => {
-  citiesFromLocalStorage.reverse();
-  const cityList = $(citiesFromLocalStorage).each(constructListItem);
-  return cityList;
-};
+  const constructListItem = (cityName) => {
+    const city = `${cityName.charAt(0).toUpperCase()}${cityName
+      .substr(1)
+      .toLowerCase()}`;
 
-const constructListItem = (index, cityName) => {
-  const listItem = `<li class="list-group-item history-list">${
-    cityName.charAt(0).toUpperCase() + cityName.substr(1).toLowerCase()
-  }</li>`;
-  $("#searchHistoryDiv").append(listItem);
-  return listItem;
+    const listItem = `<li class="list-group-item history-list">${city}</li>`;
+
+    $("#searchHistoryDiv").append(listItem);
+  };
+
+  citiesFromLocalStorage.reverse().forEach(constructListItem);
 };
 
 const getFromLocalStorage = () => {
-  const citiesFromLocalStorage = localStorage.getItem("cityNames");
-  if (citiesFromLocalStorage) {
-    return JSON.parse(citiesFromLocalStorage);
-  } else {
-    return [];
-  }
+  const citiesFromLocalStorage = JSON.parse(localStorage.getItem("cityNames"));
+  return citiesFromLocalStorage ? citiesFromLocalStorage : [];
 };
 
-// function to render weather items when clicking on search history
 const onClick = (event) => {
   const cityName = event.target.textContent;
   $("#current-weather").empty();
@@ -64,53 +56,31 @@ const onClick = (event) => {
   getDataAndRenderWeather(cityName);
 };
 
-// function to convert temp from kelvin to celcius
-const convertTemperature = (kelvin) =>
-  (tempInCelcius = Math.floor(kelvin - 273.15));
+const convertTemperature = (kelvin) => Math.floor(kelvin - 273.15);
 
-// function to convert unix date string to a dd/mm/yy format
 const convertDateTime = (dateString) =>
-  (date = new Date(dateString * 1000).toLocaleDateString("en-UK"));
+  new Date(dateString * 1000).toLocaleDateString("en-UK");
 
-// function to convert wind speed from m/s to mph
-const convertWindSpeed = (speed) => {
-  const mph = speed * 2.237;
-  return (roundedSpeed = Math.round(mph * 10) / 10);
-};
+const convertWindSpeed = (speed) => Math.round(speed * 2.237 * 10) / 10;
 
-// extract needed data from api call to construct current weather card
-const getCurrentDayWeather = (futureWeatherData) => {
-  convertTemperature(futureWeatherData.current.temp);
-  convertDateTime(futureWeatherData.current.dt);
-  convertWindSpeed(futureWeatherData.current.wind_speed);
-  return {
-    date: date,
-    iconURL: `https://openweathermap.org/img/wn/${futureWeatherData.current.weather[0].icon}@2x.png`,
-    temperature: tempInCelcius,
-    humidity: futureWeatherData.current.humidity,
-    windSpeed: roundedSpeed,
-    uvIndex: futureWeatherData.current.uvi,
-  };
-};
+const getCurrentDayWeather = (futureWeatherData) => ({
+  date: convertDateTime(futureWeatherData.current.dt),
+  iconURL: `https://openweathermap.org/img/wn/${futureWeatherData.current.weather[0].icon}@2x.png`,
+  temperature: convertTemperature(futureWeatherData.current.temp),
+  humidity: futureWeatherData.current.humidity,
+  windSpeed: convertWindSpeed(futureWeatherData.current.wind_speed),
+  uvIndex: futureWeatherData.current.uvi,
+});
 
-// iterate over forecast data array and extract needed data from api call to construct future weather card
 const getForecastData = (futureWeatherData) => {
-  const forecastData = futureWeatherData.daily.map(constructForecastObject);
-  return forecastData;
-};
+  const constructForecastObject = (item) => ({
+    date: convertDateTime(item.dt),
+    iconURL: `https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`,
+    temperature: convertTemperature(item.temp.day),
+    humidity: item.humidity,
+  });
 
-const constructForecastObject = (item) => {
-  convertTemperature(item.temp.day);
-  convertDateTime(item.dt);
-  const forecastObject = [
-    {
-      date: date,
-      iconURL: `https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`,
-      temperature: tempInCelcius,
-      humidity: item.humidity,
-    },
-  ];
-  return forecastObject;
+  return futureWeatherData.daily.map(constructForecastObject);
 };
 
 const renderCurrentCardComponent = (currentDayData, cityName) => {
