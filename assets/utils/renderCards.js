@@ -64,7 +64,7 @@ const renderCities = (citiesFromLocalStorage) => {
       .substr(1)
       .toLowerCase()}`;
 
-    const listItem = `<li class="list-group-item history-list">${city}</li>`;
+    const listItem = `<li class="list-group-item d-flex justify-content-between align-items-start history-list">${city} <span class="remove-list-item"><i class="far fa-window-close"></i></span></li>`;
 
     $("#searchHistoryDiv").append(listItem);
   };

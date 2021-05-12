@@ -47,6 +47,7 @@ const storeCityNames = (cityName) => {
 };
 
 const onClick = (event) => {
+  console.log(event.target);
   const cityName = event.target.textContent;
   $("#current-weather").empty();
   $("#forecastCardDiv").empty();
@@ -110,10 +111,7 @@ const renderAllCardsAndAppend = (futureWeatherData, cityName) => {
   const forecastDataArray = getForecastData(futureWeatherData);
 
   renderCurrentCardComponent(currentDayData, cityName);
-  $("#current-weather-heading").append(`
-    <h4 class="row m-0 fw-bold forecast-heading">
-      Today's Weather
-    </h4>`);
+
   renderForecastCardComponent(forecastDataArray);
   $("#future-weather-heading").append(`
     <h4 class="row m-0 fw-bold forecast-heading">
