@@ -47,13 +47,19 @@ const storeCityNames = (cityName) => {
 };
 
 const onClick = (event) => {
-  console.log(event.target);
+  const removeBtn = $(".remove-list-item");
   const cityName = event.target.textContent;
-  $("#current-weather").empty();
-  $("#forecastCardDiv").empty();
-  $("#error-div").remove();
-  $("#future-weather-heading").empty();
-  getDataAndRenderWeather(cityName);
+
+  if ($(event.target).is("li")) {
+    $("#current-weather").empty();
+    $("#forecastCardDiv").empty();
+    $("#error-div").remove();
+    $("#future-weather-heading").empty();
+    getDataAndRenderWeather(cityName);
+  } else if ($(event.target).is("i")) {
+    // remove list item
+    // remove from local storage
+  }
 };
 
 const getCurrentDayWeather = (futureWeatherData) => ({
