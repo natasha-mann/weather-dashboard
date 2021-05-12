@@ -110,10 +110,14 @@ const renderAllCardsAndAppend = (futureWeatherData, cityName) => {
   const forecastDataArray = getForecastData(futureWeatherData);
 
   renderCurrentCardComponent(currentDayData, cityName);
+  $("#current-weather-heading").append(`
+    <h4 class="row m-0 fw-bold forecast-heading">
+      Today's Weather
+    </h4>`);
   renderForecastCardComponent(forecastDataArray);
   $("#future-weather-heading").append(`
     <h4 class="row m-0 fw-bold forecast-heading">
-      5 Day Forecast:
+      5 Day Forecast
     </h4>`);
 };
 

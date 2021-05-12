@@ -1,6 +1,6 @@
 const renderCurrentCardComponent = (currentDayData, cityName) => {
   const currentCardComponent = `
-  <div class = "card border-0 bg-transparent px-3">
+  <div class = "card border-3 bg-transparent px-3 pb-4 current-card">
   <h4 class="current-city pt-2" id="cityName">${
     cityName.charAt(0).toUpperCase() + cityName.substr(1).toLowerCase()
   } 
@@ -25,6 +25,7 @@ const renderCurrentCardComponent = (currentDayData, cityName) => {
   </div>`;
 
   $("#current-weather").append(currentCardComponent);
+
   if (currentDayData.uvIndex >= 0 && currentDayData.uvIndex < 3) {
     $("#uv").addClass("low-uv");
   } else if (currentDayData.uvIndex >= 3 && currentDayData.uvIndex < 6) {
@@ -42,7 +43,7 @@ const renderForecastCardComponent = (forecastDataArray) => {
   const constructForecastCardsAndAppend = (item) => {
     const forecastCard = `
   <div class="col">
-    <div class="card future-card py-3 text-center">
+    <div class="card future-card py-3 my-2 text-center">
       <h6 class="card-title">${item.date}</h6>
       <div id="futureWeatherIcon">
         <img src="${item.iconURL}"/>

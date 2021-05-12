@@ -49,6 +49,10 @@ header {
   color: white;
 }
 
+.current-card {
+  border-color: var(--dark-salmon);
+}
+
 .future-card {
   background-color: var(--dark-teal);
   color: white;
@@ -77,6 +81,10 @@ header {
   #start-div {
     margin-top: 10% !important;
     width: 85% !important;
+  }
+
+  .future-card {
+    width: 100% !important;
   }
 }
 
