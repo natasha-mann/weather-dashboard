@@ -46,11 +46,6 @@ const storeCityNames = (cityName) => {
   }
 };
 
-const getFromLocalStorage = () => {
-  const citiesFromLocalStorage = JSON.parse(localStorage.getItem("cityNames"));
-  return citiesFromLocalStorage ? citiesFromLocalStorage : [];
-};
-
 const onClick = (event) => {
   const cityName = event.target.textContent;
   $("#current-weather").empty();
@@ -142,14 +137,13 @@ const getDataAndRenderWeather = async (cityName) => {
 
 const onLoad = async () => {
   const cityName = getUrlParams();
-  // const citiesFromLocalStorage = getFromLocalStorage();
-  // if (citiesFromLocalStorage.length) {
-  //   renderCities(citiesFromLocalStorage);
-  // }
-  // const cityName = citiesFromLocalStorage[0];
-  if (cityName) {
-    getDataAndRenderWeather(cityName);
-  }
+
+  const response = await getDataAndRenderWeather(cityName);
+
+  if (response) storeCityNames(cityName);
+
+  const citiesFromLocalStorage = getFromLocalStorage();
+  renderCities(citiesFromLocalStorage);
 };
 
 $("#searchHistoryDiv").click(onClick);

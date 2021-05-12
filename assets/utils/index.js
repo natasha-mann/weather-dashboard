@@ -12,9 +12,9 @@ const handleSearch = (event) => {
   }
 };
 
-// const initialisePage = () => {
-//   initialiseLocalStorage();
-// };
+const initialisePage = () => {
+  initialiseLocalStorage();
+};
 
 $("#cityForm").on("submit", handleSearch);
 // $(document).ready(initialisePage);
