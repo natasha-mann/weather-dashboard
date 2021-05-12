@@ -117,7 +117,6 @@ const renderAllCardsAndAppend = (futureWeatherData, cityName) => {
     </h4>`);
 };
 
-// get all data and append cards
 const getDataAndRenderWeather = async (cityName) => {
   const urlForCurrentWeather = createWeatherApiUrl(cityName);
   const currentWeatherData = await fetchData(urlForCurrentWeather);

@@ -62,10 +62,26 @@ header {
   background-color: var(--dark-teal);
 }
 
-.start-div {
-  top: 100%;
-}
-
 .start-info {
   color: white;
+}
+
+@media screen and (max-width: 1200px) {
+  #start-div {
+    margin-top: 5% !important;
+    width: 75% !important;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  #start-div {
+    margin-top: 10% !important;
+    width: 85% !important;
+  }
+}
+
+@media screen and (max-width: 330px) {
+  #start-div {
+    width: 90% !important;
+  }
 }
