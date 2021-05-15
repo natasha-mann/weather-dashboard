@@ -28,18 +28,26 @@ const onSearch = async (event) => {
   $("#future-weather-heading").empty();
 
   const response = await getDataAndRenderWeather(cityName);
-  if (response) storeCityNames(cityName);
+  if (response) {
+    storeCityNames(cityName);
 
-  const citiesFromLocalStorage = getFromLocalStorage();
-  renderCities(citiesFromLocalStorage);
+    const citiesFromLocalStorage = getFromLocalStorage();
 
-  $("#cityForm").trigger("reset");
+    renderCities(citiesFromLocalStorage);
+
+    $("#cityForm").trigger("reset");
+  }
 };
 
 const storeCityNames = (cityName) => {
-  if (cityName !== "") {
-    const cityNamesArray = getFromLocalStorage();
-    if (!cityNamesArray.includes(cityName)) {
+  const cityNamesArray = getFromLocalStorage();
+
+  if (cityName !== "" && !cityNamesArray.includes(cityName)) {
+    if (cityNamesArray.length > 9) {
+      cityNamesArray.shift();
+      cityNamesArray.push(cityName);
+      localStorage.setItem("cityNames", JSON.stringify(cityNamesArray));
+    } else {
       cityNamesArray.push(cityName);
       localStorage.setItem("cityNames", JSON.stringify(cityNamesArray));
     }
