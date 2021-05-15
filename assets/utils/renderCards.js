@@ -78,6 +78,17 @@ const renderCities = (citiesFromLocalStorage) => {
     
     <button type="button" class="btn btn-danger my-3" id="clear-storage">Clear History</button>
     `);
+
+    const clearAllStorage = (event) => {
+      const storedCities = getFromLocalStorage();
+
+      if (storedCities.length) {
+        localStorage.clear();
+        $("#searchHistoryDiv").empty();
+      }
+    };
+
+    $("#clear-storage").click(clearAllStorage);
   }
 };
 

@@ -28,14 +28,14 @@ const onSearch = async (event) => {
   $("#future-weather-heading").empty();
 
   const response = await getDataAndRenderWeather(cityName);
+
   if (response) {
+    $("#cityForm").trigger("reset");
     storeCityNames(cityName);
 
     const citiesFromLocalStorage = getFromLocalStorage();
 
     renderCities(citiesFromLocalStorage);
-
-    $("#cityForm").trigger("reset");
   }
 };
 
@@ -80,15 +80,6 @@ const handleHistoryClick = (event) => {
     localStorage.setItem("cityNames", JSON.stringify(filteredCities));
 
     renderCities(filteredCities);
-  }
-};
-
-const clearAllStorage = (event) => {
-  const storedCities = getFromLocalStorage();
-
-  if (storedCities.length) {
-    localStorage.clear();
-    $("#searchHistoryDiv").empty();
   }
 };
 
@@ -180,10 +171,12 @@ const onLoad = async () => {
   if (response) storeCityNames(cityName);
 
   const citiesFromLocalStorage = getFromLocalStorage();
+
   renderCities(citiesFromLocalStorage);
-  $("#clear-storage").click(clearAllStorage);
 };
 
 $("#searchHistoryDiv").click(handleHistoryClick);
+
 $("#cityForm").submit(onSearch);
+
 $(document).ready(onLoad);
