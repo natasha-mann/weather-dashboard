@@ -19,12 +19,14 @@
   </head>
   <body>
     <header class="navbar d-flex justify-content-center">
-      <div class="display-4">Weather Dashboard</div>
+      <a href="index.html"
+        ><img src="./assets/images/logo.png" alt="logo" class="logo"
+      /></a>
     </header>
 
     <main id="main">
       <div class="row p-0 m-0 main-row">
-        <aside class="col-lg-3 col-sm-12 mt-2" id="sidebar-col">
+        <aside class="col-lg-3 col-sm-12 mt-3 rounded" id="sidebar-col">
           <form id="cityForm">
             <div class="input-group mb-3 mt-3 px-3">
               <input
@@ -49,7 +51,7 @@
         <div class="col-lg-9 col-sm-12" id="forecast-col">
           <div class="p-3" id="current-weather"></div>
 
-          <div class="future-weather p-3" id="future-weather">
+          <div class="future-weather px-3 py1" id="future-weather">
             <div class="py-4" id="future-weather-heading"></div>
             <div
               class="row h-50 row-cols-xs-1 row-cols-md-5"

@@ -1,6 +1,6 @@
 const renderCurrentCardComponent = (currentDayData, cityName) => {
   const currentCardComponent = `
-  <div class = "card border-3 bg-transparent px-3 pb-4 current-card">
+  <div class = "card bg-transparent px-4 py-3 shadow-lg current-card">
   <h4 class="current-city pt-2" id="cityName">${
     cityName.charAt(0).toUpperCase() + cityName.substr(1).toLowerCase()
   } 
@@ -8,16 +8,16 @@ const renderCurrentCardComponent = (currentDayData, cityName) => {
     <div id="weatherIcon"><img src="${currentDayData.iconURL}"/> </div>
   </h4>
 
-  <div id="temp" class="fw-bold current-weather-info">Temperature: 
+  <div id="temp" class="fw-bold current-weather-info py-2">Temperature: 
     <span class="fw-normal">${currentDayData.temperature} \xB0 C</span>
   </div>
-  <div id="humidity" class="fw-bold current-weather-info">Humidity: 
+  <div id="humidity" class="fw-bold current-weather-info py-2">Humidity: 
     <span class="fw-normal">${currentDayData.humidity}%</span>
   </div>
-  <div id="windSpeed" class="fw-bold current-weather-info">Wind Speed: 
+  <div id="windSpeed" class="fw-bold current-weather-info py-2">Wind Speed: 
     <span class="fw-normal">${currentDayData.windSpeed} mph</span>
   </div>
-  <div class="fw-bold current-weather-info" >UV Index: 
+  <div class="fw-bold current-weather-info py-2" >UV Index: 
     <span id="uv" class="fw-normal rounded current-weather-info">
       ${currentDayData.uvIndex}
     </span>
@@ -43,7 +43,7 @@ const renderForecastCardComponent = (forecastDataArray) => {
   const constructForecastCardsAndAppend = (item) => {
     const forecastCard = `
   <div class="col">
-    <div class="card future-card py-3 my-2 text-center">
+    <div class="card future-card shadow py-3 my-2 text-center">
       <h6 class="card-title">${item.date}</h6>
       <div id="futureWeatherIcon">
         <img src="${item.iconURL}"/>
@@ -65,7 +65,7 @@ const renderCities = (citiesFromLocalStorage) => {
       .toLowerCase()
       .trim()}`;
 
-    const listItem = `<li class="list-group-item d-flex justify-content-between align-items-start history-list">${city}<span><i data-city="${city}" class="remove-list-item far fa-window-close"></i></span></li>`;
+    const listItem = `<li class="list-group-item d-flex justify-content-between align-items-start rounded shadow history-list">${city}<span><i data-city="${city}" class="remove-list-item far fa-window-close"></i></span></li>`;
 
     $("#searchHistoryDiv").append(listItem);
   };
@@ -76,7 +76,7 @@ const renderCities = (citiesFromLocalStorage) => {
   if (citiesFromLocalStorage.length) {
     $("#searchHistoryDiv").append(`
     
-    <button type="button" class="btn btn-danger my-3" id="clear-storage">Clear History</button>
+    <button type="button" class="btn shadow-lg my-3" id="clear-storage">Clear History</button>
     `);
 
     const clearAllStorage = (event) => {

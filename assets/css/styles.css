@@ -1,26 +1,32 @@
 :root {
-  --dark-teal: #006d77;
+  --dark-teal: #006d7796;
   --blue-green: #83c5be;
   --alice-blue: #edf6f9;
   --light-salmon: #ffddd2;
+  --lighter-salmon: #f8e2da;
   --dark-salmon: #e29578;
+  --darker-salmon: #c06341;
 }
 
 body {
   height: 100%;
-  background-color: var(--light-salmon);
-}
-
-header {
-  background-color: var(--dark-salmon);
-}
-
-#sidebar-col {
   background-color: var(--alice-blue);
 }
 
-#forecast-col {
+#main {
+  margin: 0 2%;
+}
+
+header {
   background-color: var(--light-salmon);
+}
+
+#sidebar-col {
+  background-color: var(--dark-teal);
+}
+
+#forecast-col {
+  background-color: var(--alice-blue);
 }
 
 #uv {
@@ -50,7 +56,8 @@ header {
 }
 
 .current-card {
-  border-color: var(--dark-salmon);
+  background-color: var(--dark-teal) !important;
+  color: white;
 }
 
 .future-card {
@@ -60,6 +67,12 @@ header {
 
 .history-list {
   cursor: pointer;
+  background-color: var(--light-salmon);
+}
+
+.history-list:hover {
+  cursor: pointer;
+  background-color: var(--lighter-salmon);
 }
 
 .start-div {
@@ -70,10 +83,28 @@ header {
   color: white;
 }
 
+#clear-storage {
+  background-color: var(--dark-salmon);
+  border-color: var(--dark-salmon);
+  color: black;
+}
+
+#clear-storage:hover {
+  background-color: var(--darker-salmon);
+  border-color: var(--darker-salmon);
+  color: white;
+}
+
 @media screen and (max-width: 1200px) {
   #start-div {
     margin-top: 5% !important;
-    width: 75% !important;
+    width: 75% !important;s
+  }
+}
+@media screen and (max-width: 991px) {
+  .current-card > div,
+  .current-card > h4 {
+    text-align: center;
   }
 }
 
@@ -83,8 +114,10 @@ header {
     width: 85% !important;
   }
 
-  .future-card {
-    width: 100% !important;
+  .logo {
+    height: 100%;
+    width: 100%;
+    padding: 0 2%;
   }
 }
 
