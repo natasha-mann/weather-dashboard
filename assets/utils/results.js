@@ -24,7 +24,6 @@ const onSearch = async (event) => {
   $("#current-weather").empty();
   $("#forecastCardDiv").empty();
   $("#searchHistoryDiv").empty();
-  $("#error-div").remove();
   $("#future-weather-heading").empty();
 
   const response = await getDataAndRenderWeather(cityName);
@@ -61,7 +60,6 @@ const handleHistoryClick = (event) => {
   if ($(event.target).is("li")) {
     $("#current-weather").empty();
     $("#forecastCardDiv").empty();
-    $("#error-div").remove();
     $("#future-weather-heading").empty();
     getDataAndRenderWeather(cityName);
   } else if ($(event.target).is("i")) {
@@ -103,24 +101,12 @@ const getForecastData = (futureWeatherData) => {
   return futureWeatherData.daily.map(constructForecastObject);
 };
 
-const createErrorMessage = () => {
-  const errorMessage = `<div id="error-div"
-  class="start-div position-absolute top-50 start-50 translate-middle h-50 w-50"
->
-  <div class="start-info px-4 py-5 fs-4 text-center">
-  <h3> Oh no! We can't find your city!</h3>
-<div> Please check your spelling. If you're still having trouble, there may be an issue on our end. Please check back later!</div>
-  </div>
-</div>`;
-  $("#forecast-col").append(errorMessage);
-};
-
 const fetchData = async (url) => {
   try {
     const response = await fetch(url);
     return response.json();
   } catch (error) {
-    createErrorMessage();
+    window.location.href = "/error.html";
   }
 };
 
@@ -158,7 +144,7 @@ const getDataAndRenderWeather = async (cityName) => {
     renderAllCardsAndAppend(futureWeatherData, cityName);
     return true;
   } else {
-    createErrorMessage();
+    window.location.href = "/error.html";
     return false;
   }
 };
