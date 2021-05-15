@@ -5,7 +5,7 @@ const renderCurrentCardComponent = (currentDayData, cityName) => {
     cityName.charAt(0).toUpperCase() + cityName.substr(1).toLowerCase()
   } 
     <span id="currentDate">- ${currentDayData.date}</span>
-    <span id="weatherIcon"><img src="${currentDayData.iconURL}"/> </span>
+    <div id="weatherIcon"><img src="${currentDayData.iconURL}"/> </div>
   </h4>
 
   <div id="temp" class="fw-bold current-weather-info">Temperature: 
@@ -62,14 +62,23 @@ const renderCities = (citiesFromLocalStorage) => {
   const constructListItem = (cityName) => {
     const city = `${cityName.charAt(0).toUpperCase()}${cityName
       .substr(1)
-      .toLowerCase()}`;
+      .toLowerCase()
+      .trim()}`;
 
-    const listItem = `<li class="list-group-item d-flex justify-content-between align-items-start history-list">${city} <span><i data-city="${city}" class="remove-list-item far fa-window-close"></i></span></li>`;
+    const listItem = `<li class="list-group-item d-flex justify-content-between align-items-start history-list">${city}<span><i data-city="${city}" class="remove-list-item far fa-window-close"></i></span></li>`;
 
     $("#searchHistoryDiv").append(listItem);
   };
 
+  $("#searchHistoryDiv").empty();
   citiesFromLocalStorage.reverse().forEach(constructListItem);
+
+  if (citiesFromLocalStorage.length) {
+    $("#searchHistoryDiv").append(`
+    
+    <button type="button" class="btn btn-danger my-3" id="clear-storage">Clear History</button>
+    `);
+  }
 };
 
 export {

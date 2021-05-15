@@ -46,7 +46,7 @@ const storeCityNames = (cityName) => {
   }
 };
 
-const onClick = (event) => {
+const handleHistoryClick = (event) => {
   const removeBtn = $(".remove-list-item");
   const cityName = event.target.textContent;
 
@@ -57,8 +57,30 @@ const onClick = (event) => {
     $("#future-weather-heading").empty();
     getDataAndRenderWeather(cityName);
   } else if ($(event.target).is("i")) {
-    // remove list item
-    // remove from local storage
+    const citiesFromLocalStorage = getFromLocalStorage();
+
+    const filterCities = (each) => {
+      const target = $(event.target);
+      const parent = $(target).closest(".history-list");
+      const city = parent.text().toLowerCase();
+
+      return each !== city;
+    };
+
+    const filteredCities = citiesFromLocalStorage.filter(filterCities);
+
+    localStorage.setItem("cityNames", JSON.stringify(filteredCities));
+
+    renderCities(filteredCities);
+  }
+};
+
+const clearAllStorage = (event) => {
+  const storedCities = getFromLocalStorage();
+
+  if (storedCities.length) {
+    localStorage.clear();
+    $("#searchHistoryDiv").empty();
   }
 };
 
@@ -143,7 +165,7 @@ const getDataAndRenderWeather = async (cityName) => {
 };
 
 const onLoad = async () => {
-  const cityName = getUrlParams();
+  const cityName = getUrlParams().toLowerCase();
 
   const response = await getDataAndRenderWeather(cityName);
 
@@ -151,8 +173,9 @@ const onLoad = async () => {
 
   const citiesFromLocalStorage = getFromLocalStorage();
   renderCities(citiesFromLocalStorage);
+  $("#clear-storage").click(clearAllStorage);
 };
 
-$("#searchHistoryDiv").click(onClick);
+$("#searchHistoryDiv").click(handleHistoryClick);
 $("#cityForm").submit(onSearch);
 $(document).ready(onLoad);
